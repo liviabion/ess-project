@@ -1,55 +1,46 @@
-Feature: Cadastro e manuntenção de usuários
-    As a usuário
+Feature: Cadastro e manuntenção de métodos de pagamento
+    As a usuário X
     I want to conseguir cadastrar, atualizar e remover meus métodos de pagamento no sistema
     So that eu possa confirmar o pagamento dos produtos
 
 Scenario: Cadastro de cartão de crédito com sucesso
-Given o usuário está logado com email "jorge123@gmail.com"
-And está na tela "Página de pagamento"
+Given o usuário X está logado como cliente
+And está na tela "Métodos de Pagamento"
 When ele seleciona "Novo cartão de crédito"
-And digita o número do cartão "9999 9999 9999 9999", nome do titular "Jorge Silva" e CVV "111" corretamente
-And clica em "Cadastrar"
-Then ele visualiza a mensagem "Cartão cadastrado com sucesso"
-And ele pode efetuar suas compras
+And digita nos campos X,Y e Z, respectivamente, "X", "Y" e "Z"
+Then o usuário X clica em "Cadastrar"
+And ele visualiza a mensagem "Cartão cadastrado com sucesso"
 
 Scenario: Cadastro de cartão de crédito inválido
-Given o usuário está logado com email "jorge123@gmail.com"
-And está na tela "Página de pagamento"
+Given o usuário X está logado como cliente
+And está na tela "Métodos de Pagamento"
 When ele seleciona "Novo cartão de crédito"
-And digita o número do cartão "9999 9999 9999 9999", nome do titular "Jorge Silva" e CVV "111" incorretamente
-And clica em "Cadastrar"
-Then ele visualiza a mensagem "Cartão inválido. Verifique as informações."
+And digita nos campos X,Y e Z, respectivamente, "X", "Y" e "Z" incorretamente
+Then o usuário X clica em "Cadastrar"
+And ele visualiza a mensagem "Cartão inválido. Verifique as informações."
 
 Scenario: Cadastro de cartão de crédito repetido
-Given o usuário está logado com email "jorge123@gmail.com"
-And está na tela "Página de pagamento"
+Given o usuário X está logado como cliente
+And está na tela "Métodos de Pagamento"
 When ele seleciona "Novo cartão de crédito"
-And digita o número do cartão "9999 9999 9999 9999", nome do titular "Jorge Silva" e CVV "111" corretamente
-And clica em "Cadastrar"
-Then ele visualiza a mensagem "Cartão já cadastrado. Tente outro cartão."
+And digita nos campos X,Y e Z, respectivamente, "X", "Y" e "Z"
+Then o usuário X clica em "Cadastrar"
+And ele visualiza a mensagem "Cartão já cadastrado. Tente outro cartão."
 
-Scenario: Cadastro de pix com sucesso
-Given o usuário está logado com email "jorge123@gmail.com"
-And está na tela "Página de pagamento"
-When ele seleciona "Pix"
-And lê o QRCode e confirma o pagamento
-Then ele visualiza a mensagem "Pagamento confirmado"
-And ele pode efetuar suas compras
+Scenario: Remoção de um método de pagamento
+Given o usuário X está logado como cliente
+And está na tela "Métodos de Pagamento"
+When ele seleciona a opção "Gerenciar métodos de pagamento"
+And ele vê e seleciona o cartão "X" de campo "Y"
+And ele seleciona a opção "Remover cartão de crédito"
+Then o usuário X clica em "Confirmar"
+And ele vê uma mensagem "Cartão removido com sucesso"
 
-Scenario: Cadastro de boleto com sucesso
-Given o usuário está logado com email "jorge123@gmail.com"
-And está na tela "Página de pagamento"
-When ele seleciona "Boleto"
-And lê código de barras ou digita o código e confirma o pagamento
-Then ele visualiza a mensagem "Pagamento confirmado"
-And ele pode efetuar suas compras
-
-Scenario: Cadastro de paypall com sucesso
-Given o usuário está logado com email "jorge123@gmail.com"
-And está na tela "Página de pagamento"
-When ele seleciona "Paypall"
-And confirma o pagamento com sua conta do paypall
-Then ele visualiza a mensagem "Pagamento confirmado"
-And ele pode efetuar suas compras
-
-Commit teste para roteiro 1*
+Scenario: Atualização de um método de pagamento
+Given o usuário X está logado como cliente
+And está na tela "Métodos de Pagamento"
+When ele seleciona a opção "Gerenciar métodos de pagamento"
+And ele vê e seleciona o cartão "X" de campo "Y"
+And ele seleciona a opção "Atualizar cartão de crédito"
+Then o usuário X clica em "Confirmar"
+And ele vê uma mensagem "Cartão atualizado com sucesso"
