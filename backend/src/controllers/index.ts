@@ -1,3 +1,3 @@
 import UserController from './UserController';
-
-export { UserController };
+import CardPaymentController from './cardPayment';
+export { UserController, CardPaymentController };
