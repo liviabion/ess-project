@@ -84,7 +84,7 @@ export default function DeliveryPerson() {
             </div>
           </div>
           <div style={DeliveryPersonStyles.searchDiv}>
-            <text>{getExample.nome}</text>
+            <text>{getExample.user.nome}</text>
            
           </div>
           <div style={{ padding: '0 25px' }}>
@@ -93,7 +93,7 @@ export default function DeliveryPerson() {
             </div>
           </div>
           <div style={DeliveryPersonStyles.searchDiv}>
-            <text>{getExample.cpf}</text>
+            <text>{getExample.user.cpf}</text>
           </div>
           <div style={{ padding: '0 25px' }}>
             <div style={{ padding: '5px' }}>
@@ -101,7 +101,7 @@ export default function DeliveryPerson() {
             </div>
           </div>
           <div style={DeliveryPersonStyles.searchDiv}>
-            <text>{getExample.email}</text>
+            <text>{getExample.user.email}</text>
           </div>
           <div style={{ padding: '0 25px' }}>
             <div style={{ padding: '5px' }}>
@@ -110,7 +110,7 @@ export default function DeliveryPerson() {
           </div>
           <div >
             <div style={DeliveryPersonStyles.searchDiv}>
-              <text>{getExample.telefone}</text>
+              <text>{getExample.user.telefone}</text>
             </div>
           </div>
           {/* Campo de Endereço */}
