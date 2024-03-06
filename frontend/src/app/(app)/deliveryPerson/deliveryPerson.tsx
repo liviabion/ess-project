@@ -1,112 +1,202 @@
 'use client'
 import React, { useState } from 'react';
-import Image from 'next/image'; // Importando a tag Image do Next.js
-import SearchIcon from './Search.jpg'; // Importando o ícone
-import { useRouter } from 'next/navigation'
-export default function DeliveryPerson() {
-  const [showDiv, setShowDiv] = useState(false); // Estado para controlar a visibilidade da div branca
-  const [cpfValue, setCpfValue] = useState(""); // Estado para armazenar o valor do CPF
+import Image from 'next/image';
+import SearchIcon from './Search.jpg';
+import Arrow from './Forward.jpg';
+import { useRouter } from 'next/navigation';
+import { DeliveryPersonStyles } from './styles';
+import { ApiDeliveryPerson } from '@/services/deliveryPerson';
 
-  // Função para alternar a visibilidade da div branca
+export default function DeliveryPerson() {
+  const [showDiv, setShowDiv] = useState(false);
+  const [cpfValue, setCpfValue] = useState(""); 
+  const [getExample, setGetExample] = useState<any>(null); 
+  const [enderecoOpen, setEnderecoOpen] = useState(false);
+  const router = useRouter();
+
   const toggleDiv = () => {
     setShowDiv(!showDiv);
   };
 
-  // Função para lidar com a mudança no valor do input do CPF
-  const handleCpfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCpfValue(event.target.value);
+  const handleArrowClick = async () => {
+    try {
+     
+      const example = await ApiDeliveryPerson.getExample(cpfValue);
+      setGetExample(example);
+    } catch (error) {
+      console.error("Erro ao obter informações do entregador:", error);
+      alert('Usuario nao encontrado')
+    }
   };
-  const router  = useRouter();
-  const handleButtonClick = () => {
-    router.push("/newDeliveryPerson"); 
+
+  const AddButtonClick = () => {
+    router.push("/newDeliveryPerson");
   };
+  const EditButtonClick = () => {
+    localStorage.setItem('cpfValue', cpfValue);
+    router.push("/editDeliveryPerson");
+  };
+  const toggleEndereco = () => {
+    setEnderecoOpen(!enderecoOpen);
+  };
+
+  const handleChangeCPF = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
+    setCpfValue(e.target.value);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  
+    if (e.key === 'Enter') {
+      handleArrowClick();
+    }
+  };
+
   return (
-    <div style={{
-      backgroundColor: '#FCF6F6',
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-    }}>
-      <div style={{
-        width: '318px',
-        height: '27px',
-        backgroundColor: 'black',
-      }}></div>
-      <text style={{
-        color: '#9B1127',
-        fontSize: '40px',
-        fontFamily: 'Red Hat Display, sans-serif'
-      }}>Entregadores</text>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        margin: '20px',
-      }}>
-        <div style={{
-          backgroundColor: '#FFFFFF',
-          width: '200px',
-          height: '60px',
-          borderRadius: '8px',
-          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 40px'
-        }}>
-          <text style={{fontSize:'32px'}}>CPF</text>
-          <Image 
-            src={SearchIcon} 
-            alt="Ícone de pesquisa" 
-            width={40} 
-            height={40} 
-            onClick={toggleDiv} 
-            style={{ cursor: 'pointer' }} 
-          /> 
+    <div style={DeliveryPersonStyles.container}>
+      <div style={DeliveryPersonStyles.navBar}></div>
+      <div style={DeliveryPersonStyles.titleContainer}>
+        <text style={DeliveryPersonStyles.title}>Entregadores</text>
+      </div>
+      <div style={DeliveryPersonStyles.inputContainer}>
+        <div style={DeliveryPersonStyles.inputWrapper}>
+          <text style={DeliveryPersonStyles.inputLabel}>CPF</text>
+          <Image
+            src={SearchIcon}
+            alt="Ícone de pesquisa"
+            width={40}
+            height={40}
+            onClick={toggleDiv}
+            style={DeliveryPersonStyles.searchIcon}
+          />
         </div>
         {showDiv && (
-          <div style={{
-            backgroundColor: '#FFFFFF',
-            width: '400px',
-            height: '60px',
-            borderRadius: '8px',
-            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '0 40px',
-            marginLeft: '20px', // Ajuste de margem para posicionar abaixo da div de CPF
-          }}>
-            <input 
-              type="text" 
-              value={cpfValue} 
-              onChange={handleCpfChange} 
-              placeholder="Digite o CPF" 
-              style={{ 
-                width: '100%', 
-                padding: '8px', 
-                outline: 'none' 
-              }} 
+          <div style={DeliveryPersonStyles.searchDiv}>
+            <input
+              type="text"
+              value={cpfValue}
+              onChange={handleChangeCPF} 
+              onKeyPress={handleKeyPress} 
+              placeholder="Digite o CPF"
+              style={DeliveryPersonStyles.input}
+            />
+            <Image
+              src={Arrow}
+              alt="Ícone de seta"
+              width={40}
+              height={40}
+              onClick={handleArrowClick} 
+              style={DeliveryPersonStyles.searchIcon}
             />
           </div>
         )}
       </div>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        marginRight: '20px', 
-      }}>
-        <div style={{
-          backgroundColor: '#9B1127',
-          width: '100px',
-          height: '50px', // Ajuste de altura para igualar com a altura da div de CPF
-          borderRadius: '8px',
-          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }} onClick={handleButtonClick}>
-          <text style={{color:'white', fontSize:'40px', marginBottom:'10px'}}>+</text>
+
+      {getExample && (
+        <div style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ padding: '0 25px', marginTop: '20px' }}>
+            <div style={{ padding: '5px' }}>
+              <text>Nome</text>
+            </div>
+          </div>
+          <div style={DeliveryPersonStyles.searchDiv}>
+            <text>{getExample.user.name}</text>
+          </div>
+          <div style={{ padding: '0 25px' }}>
+            <div style={{ padding: '5px' }}>
+              <text>Cpf</text>
+            </div>
+          </div>
+          <div style={DeliveryPersonStyles.searchDiv}>
+            <text>{getExample.user.cpf}</text>
+          </div>
+          <div style={{ padding: '0 25px' }}>
+            <div style={{ padding: '5px' }}>
+              <text>Email</text>
+            </div>
+          </div>
+          <div style={DeliveryPersonStyles.searchDiv}>
+            <text>{getExample.user.email}</text>
+          </div>
+          <div style={{ padding: '0 25px' }}>
+            <div style={{ padding: '5px' }}>
+              <text>Telefone</text>
+            </div>
+          </div>
+          <div>
+            <div style={DeliveryPersonStyles.searchDiv}>
+              <text>{getExample.user.phone}</text>
+            </div>
+          </div>
+          {/* Campo de Endereço */}
+          <div style={{ padding: '0 25px' }}>
+            <div style={{ padding: '5px' }}>
+              <text>Endereco</text>
+            </div>
+          </div>
+          <div
+            style={{ ...DeliveryPersonStyles.searchDiv, cursor: 'pointer' }}
+            onClick={toggleEndereco}
+          ></div>
+          {/* Detalhes do endereço */}
+          {enderecoOpen && (
+            <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', borderRadius: '8px', width: '400px', marginLeft:'15px'}}>
+              <table>
+                <tbody>
+                <tr>
+                    <td>CEP:</td>
+                    <td>{getExample?.address?.postalCode}</td>
+                  </tr>
+                  <tr>
+                    <td>Rua:</td>
+                    <td>{getExample?.address?.street}</td>
+                  </tr>
+                  <tr>
+                    <td>Cidade:</td>
+                    <td>{getExample?.address?.city}</td>
+                  </tr>
+                  <tr>
+                    <td>Bairro:</td>
+                    <td>{getExample?.address?.district}</td>
+                  </tr>
+                  <tr>
+                    <td>Número:</td>
+                    <td>{getExample?.address?.number}</td>
+                  </tr>
+                  <tr>
+                    <td>Estado:</td>
+                    <td>{getExample?.address?.state}</td>
+                  </tr>
+                  <tr>
+                    <td>Complemento:</td>
+                    <td>{getExample?.address?.complement}</td>
+                  </tr>
+                  <tr>
+                    <td>Referência:</td>
+                    <td>{getExample?.address?.reference}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
+
+         
+        </div>
+        
+      )} 
+      { getExample && (
+ <div style={DeliveryPersonStyles.EditButtonContainer}>
+ <div style={DeliveryPersonStyles.EditButton}onClick={EditButtonClick}>
+   <text style={DeliveryPersonStyles.EditButtonText}>Editar Dados</text>
+ </div>
+ </div>
+
+      )
+
+      }
+      <div style={DeliveryPersonStyles.addButtonContainer}>
+        <div style={DeliveryPersonStyles.addButton} onClick={AddButtonClick}>
+          <text style={DeliveryPersonStyles.addButtonText}>+</text>
         </div>
       </div>
     </div>
