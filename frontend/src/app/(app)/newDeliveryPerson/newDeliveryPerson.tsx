@@ -39,7 +39,24 @@ export default function DeliveryPerson() {
   };
 
   const handleAddButtonClick = () => {
-    toggleConfirm(); // Chama a função toggleConfirm quando o botão Add é clicado
+    // Verifica se algum campo obrigatório está vazio antes de abrir o popup de confirmação
+    if (
+      nomeValue.trim() === "" ||
+      cpfValue.trim() === "" ||
+      telefoneValue.trim() === "" ||
+      emailValue.trim() === "" ||
+      enderecoData.postalCode.trim() === "" ||
+      enderecoData.street.trim() === "" ||
+      enderecoData.city.trim() === "" ||
+      enderecoData.district.trim() === "" ||
+      enderecoData.number.trim() === "" ||
+      enderecoData.state.trim() === "" ||
+      enderecoData.reference.trim() === ""
+    ) {
+      alert("Preencha todos os campos antes de adicionar.");
+    } else {
+      toggleConfirm();
+    }
   };
 
   const handleConfirmYes = async () => {
@@ -58,14 +75,22 @@ export default function DeliveryPerson() {
       }
     };
     try {
-      // Chama a função createExample de ApiDeliveryPerson para enviar os dados para o backend
-      await ApiDeliveryPerson.createExample(data);
-      console.log("Informações enviadas com sucesso!");
-      setDeliveryPersonCreated(true); // Define o estado para exibir a mensagem "Entregador Criado"
+      const response = await ApiDeliveryPerson.createExample(data);
+      console.log("Informações enviadas com sucesso!", response);
+      alert("Entregador cadastrado com sucesso!");
+      setDeliveryPersonCreated(true); 
     } catch (error) {
-      console.error("Erro ao enviar informações para o backend:", error);
+      if(error.response.data.message=='This cpf is already registered'){
+        alert('Esse cpf ja esta cadastrado');
+      }
+     
+    
+    if(error.response.data.message=='This email is already registered'){
+      alert('Esse email ja esta cadastrado')
     }
+  }
   };
+  
 
   return (
     <div style={NewDeliveryPersonStyles.container}>
@@ -130,6 +155,13 @@ export default function DeliveryPerson() {
           {/* Campos de endereço */}
           {enderecoOpen && (
             <div style={{ flexDirection: 'column', width: '400px' }}>
+                 <input
+                type="text"
+                value={enderecoData.postalCode}
+                onChange={(e) => setEnderecoData({ ...enderecoData, postalCode: e.target.value })}
+                placeholder="CEP"
+                style={NewDeliveryPersonStyles.inputStyle}
+              />
               <input
                 type="text"
                 value={enderecoData.street}

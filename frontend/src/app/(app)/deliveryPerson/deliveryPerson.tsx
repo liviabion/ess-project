@@ -9,8 +9,8 @@ import { ApiDeliveryPerson } from '@/services/deliveryPerson';
 
 export default function DeliveryPerson() {
   const [showDiv, setShowDiv] = useState(false);
-  const [cpfValue, setCpfValue] = useState(""); // Estado para armazenar o valor do CPF
-  const [getExample, setGetExample] = useState<any>(null); // Estado para armazenar os dados obtidos
+  const [cpfValue, setCpfValue] = useState(""); 
+  const [getExample, setGetExample] = useState<any>(null); 
   const [enderecoOpen, setEnderecoOpen] = useState(false);
   const router = useRouter();
 
@@ -20,20 +20,36 @@ export default function DeliveryPerson() {
 
   const handleArrowClick = async () => {
     try {
-      // Chamamos a função para obter os dados somente quando a seta é clicada
+     
       const example = await ApiDeliveryPerson.getExample(cpfValue);
       setGetExample(example);
     } catch (error) {
       console.error("Erro ao obter informações do entregador:", error);
+      alert('Usuario nao encontrado')
     }
   };
 
-  const handleButtonClick = () => {
+  const AddButtonClick = () => {
     router.push("/newDeliveryPerson");
   };
-
+  const EditButtonClick = () => {
+    localStorage.setItem('cpfValue', cpfValue);
+    router.push("/editDeliveryPerson");
+  };
   const toggleEndereco = () => {
     setEnderecoOpen(!enderecoOpen);
+  };
+
+  const handleChangeCPF = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
+    setCpfValue(e.target.value);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  
+    if (e.key === 'Enter') {
+      handleArrowClick();
+    }
   };
 
   return (
@@ -59,7 +75,8 @@ export default function DeliveryPerson() {
             <input
               type="text"
               value={cpfValue}
-              onChange={(e) => setCpfValue(e.target.value)}
+              onChange={handleChangeCPF} 
+              onKeyPress={handleKeyPress} 
               placeholder="Digite o CPF"
               style={DeliveryPersonStyles.input}
             />
@@ -68,7 +85,7 @@ export default function DeliveryPerson() {
               alt="Ícone de seta"
               width={40}
               height={40}
-              onClick={handleArrowClick} // A função handleArrowClick será chamada apenas quando a seta for clicada
+              onClick={handleArrowClick} 
               style={DeliveryPersonStyles.searchIcon}
             />
           </div>
@@ -76,7 +93,6 @@ export default function DeliveryPerson() {
       </div>
 
       {getExample && (
-       
         <div style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ padding: '0 25px', marginTop: '20px' }}>
             <div style={{ padding: '5px' }}>
@@ -84,8 +100,7 @@ export default function DeliveryPerson() {
             </div>
           </div>
           <div style={DeliveryPersonStyles.searchDiv}>
-            <text>{getExample.user.nome}</text>
-           
+            <text>{getExample.user.name}</text>
           </div>
           <div style={{ padding: '0 25px' }}>
             <div style={{ padding: '5px' }}>
@@ -108,9 +123,9 @@ export default function DeliveryPerson() {
               <text>Telefone</text>
             </div>
           </div>
-          <div >
+          <div>
             <div style={DeliveryPersonStyles.searchDiv}>
-              <text>{getExample.user.telefone}</text>
+              <text>{getExample.user.phone}</text>
             </div>
           </div>
           {/* Campo de Endereço */}
@@ -128,42 +143,59 @@ export default function DeliveryPerson() {
             <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', borderRadius: '8px', width: '400px', marginLeft:'15px'}}>
               <table>
                 <tbody>
+                <tr>
+                    <td>CEP:</td>
+                    <td>{getExample?.address?.postalCode}</td>
+                  </tr>
                   <tr>
                     <td>Rua:</td>
-                    <td>{getExample?.enderecoData?.street}</td>
+                    <td>{getExample?.address?.street}</td>
                   </tr>
                   <tr>
                     <td>Cidade:</td>
-                    <td>{getExample?.enderecoData?.city}</td>
+                    <td>{getExample?.address?.city}</td>
                   </tr>
                   <tr>
                     <td>Bairro:</td>
-                    <td>{getExample?.enderecoData?.district}</td>
+                    <td>{getExample?.address?.district}</td>
                   </tr>
                   <tr>
                     <td>Número:</td>
-                    <td>{getExample?.enderecoData?.number}</td>
+                    <td>{getExample?.address?.number}</td>
                   </tr>
                   <tr>
                     <td>Estado:</td>
-                    <td>{getExample?.enderecoData?.state}</td>
+                    <td>{getExample?.address?.state}</td>
                   </tr>
                   <tr>
                     <td>Complemento:</td>
-                    <td>{getExample?.enderecoData?.complement}</td>
+                    <td>{getExample?.address?.complement}</td>
                   </tr>
                   <tr>
                     <td>Referência:</td>
-                    <td>{getExample?.enderecoData?.reference}</td>
+                    <td>{getExample?.address?.reference}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           )}
+
+         
         </div>
-      )}
+        
+      )} 
+      { getExample && (
+ <div style={DeliveryPersonStyles.EditButtonContainer}>
+ <div style={DeliveryPersonStyles.EditButton}onClick={EditButtonClick}>
+   <text style={DeliveryPersonStyles.EditButtonText}>Editar Dados</text>
+ </div>
+ </div>
+
+      )
+
+      }
       <div style={DeliveryPersonStyles.addButtonContainer}>
-        <div style={DeliveryPersonStyles.addButton} onClick={handleButtonClick}>
+        <div style={DeliveryPersonStyles.addButton} onClick={AddButtonClick}>
           <text style={DeliveryPersonStyles.addButtonText}>+</text>
         </div>
       </div>

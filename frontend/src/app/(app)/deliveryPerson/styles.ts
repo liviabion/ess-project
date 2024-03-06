@@ -85,6 +85,29 @@ export const DeliveryPersonStyles = {
   addButtonText: {
     color: 'white',
     fontSize: '40px',
-    marginBottom: '10px',
+    marginBottom: '5px',
+  },
+  EditButtonContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    marginLeft: '1620px',
+    marginTop: '900px',
+    position: 'fixed' as const,
+  },
+  EditButton: {
+    backgroundColor: '#9B1127',
+    width: '200px',
+
+    height: '50px',
+    borderRadius: '8px',
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  EditButtonText: {
+    color: 'white',
+    fontSize: '24px',
+   
   },
 };

@@ -4,41 +4,21 @@ Eu quero registrar meus profissionais entregadores na minha plataforma
 Para que eu possa gerenciar meus trabalhadores
 
 Scenario: Cadastro de entregador
-  Given eu estou na página "criação e manuntenção de perfis dos entregadores"
-  And eu vejo a opção “+”
-  When eu seleciono “+”
-  And eu preencho “nome” com “Bea”
-  And eu preencho “CPF” com “12345678”
-  And eu preencho “telefone” com “987654321”
-  And eu preencho “email” com “bea@example.com”
-  And eu preencho “rua” com “Rua das Flores”
-  And eu preencho “cidade” com “Cidade Exemplo”
-  And eu preencho “bairro” com “Bairro Exemplo”
-  And eu preencho “numero” com “123”
-  And eu preencho “estado” com “Estado Exemplo”
-  And eu preencho “complemento” com “Apartamento 101”
-  And eu preencho “referencia” com “Próximo à praça central”
-  And eu seleciono “salvar”
-  Then eu vejo uma mensagem de “Entregador Criado”
+Given eu estou na página './deliveryPerson'
+And eu vejo a opção “+”
+When eu seleciono “+”
+And eu preencho “nome” com “Bea”, “CPF” com “12345678”, “telefone” com “987654321”, “email” com “bea@example.com”, "cep" com "123" “rua” com “Rua das Flores”, “cidade” com “Cidade Exemplo”, “bairro” com “Bairro Exemplo”, “numero” com “123”, “estado” com “Estado Exemplo”, “complemento” com “Apartamento 101”, “referencia” com “Próximo à praça central”
+And eu seleciono “salvar”
+Then eu vejo uma mensagem de “Entregador Criado”
 
-Scenario: Cadastro de entregador
-  Given eu estou na página "criação e manuntenção de perfis dos entregadores"
-  And existe um entregador com cpf "12345678"
-  And eu vejo a opção “+”
-  When eu seleciono “+”
-  And eu preencho “nome” com “Paula”
-  And eu preencho “CPF” com “12345678”
-  And eu preencho “telefone” com “987654321”
-  And eu preencho “email” com “paula@example.com”
-  And eu preencho “rua” com “Rua das Flores”
-  And eu preencho “cidade” com “Cidade Exemplo”
-  And eu preencho “bairro” com “Bairro Exemplo”
-  And eu preencho “numero” com “123”
-  And eu preencho “estado” com “Estado Exemplo”
-  And eu preencho “complemento” com “Apartamento 101”
-  And eu preencho “referencia” com “Próximo à praça central”
-  And eu seleciono “salvar”
-  Then eu vejo uma mensagem de “Cpf ja registrado”
+Scenario:  Falha Cadastro de entregador
+Given eu estou na página "criação e manuntenção de perfis dos entregadores"
+And existe um entregador com cpf "12345678"
+And eu vejo a opção “+”
+When eu seleciono “+”
+And eu preencho “nome” com “Bea”, “CPF” com “12345678”, “telefone” com “987654321”, “email” com “bea@example.com”, "cep" com "123" “rua” com “Rua das Flores”, “cidade” com “Cidade Exemplo”, “bairro” com “Bairro Exemplo”, “numero” com “123”, “estado” com “Estado Exemplo”, “complemento” com “Apartamento 101”, “referencia” com “Próximo à praça central”
+And eu seleciono “salvar”
+Then eu vejo uma mensagem de “Cpf ja registrado”
 
 
 Scenario: Mudança de caracteristicas
@@ -50,12 +30,12 @@ And eu seleciono “CPF”
 And eu digito “12345679”
 And eu vejo a opção “editar perfil"
 When eu seleciono “editar perfil”
-And eu preencho “nome” com “Fred”
+And escrevo o nome "Fred" na opção "Bea"
 And eu seleciono “salvar”
-Then eu vejo uma mensagem de “User updated”
+Then eu vejo uma mensagem de “Dados atualizados!”
 
 
-Scenario: Falha udança de caracteristicas
+Scenario: Falha mudança de caracteristicas
 
 Given eu estou na página "criação e manuntenção de perfis dos entregadores"
 And nao existe um entregador com cpf "12345679"
