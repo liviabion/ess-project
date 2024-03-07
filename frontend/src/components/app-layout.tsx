@@ -28,6 +28,10 @@ export const appAdminRoutes: AppRoute[] = [
     path: '/cupons'
   },
   {
+    name: 'Entregadores',
+    path: '/deliveryPerson'
+  },
+  {
     name: 'Entregas',
     path: '/entregas'
   }

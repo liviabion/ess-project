@@ -29,17 +29,19 @@ export default function DeliveryPerson() {
     reference: ""
   });
   const [deliveryPersonCreated, setDeliveryPersonCreated] = useState(false);
+  const [successPopupOpen, setSuccessPopupOpen] = useState(false);
+  const [errorPopupOpen, setErrorPopupOpen] = useState(false);
+  const [errorType, setErrorType] = useState(""); // Nova variável para armazenar o tipo de erro
 
   const toggleEndereco = () => {
     setEnderecoOpen(!enderecoOpen);
   };
 
   const toggleConfirm = () => {
-    setConfirmOpen(!confirmOpen); // Altera o estado confirmOpen para o oposto do valor atual
+    setConfirmOpen(!confirmOpen);
   };
 
-  const handleAddButtonClick = () => {
-    // Verifica se algum campo obrigatório está vazio antes de abrir o popup de confirmação
+  const handleAddButtonClick = async () => {
     if (
       nomeValue.trim() === "" ||
       cpfValue.trim() === "" ||
@@ -60,8 +62,7 @@ export default function DeliveryPerson() {
   };
 
   const handleConfirmYes = async () => {
-    toggleConfirm(); // Fecha o popup de confirmação
-    // Prepara os dados para enviar para o backend
+    toggleConfirm();
     const data = {
       deliveryPersonData: {
         name: nomeValue,
@@ -77,20 +78,18 @@ export default function DeliveryPerson() {
     try {
       const response = await ApiDeliveryPerson.createExample(data);
       console.log("Informações enviadas com sucesso!", response);
-      alert("Entregador cadastrado com sucesso!");
-      setDeliveryPersonCreated(true); 
+      setDeliveryPersonCreated(true);
+      setSuccessPopupOpen(true);
     } catch (error) {
-      if(error.response.data.message=='This cpf is already registered'){
-        alert('Esse cpf ja esta cadastrado');
+      if (error.response.data.message === 'This cpf is already registered') {
+        setErrorType("Esse CPF ja foi registrado");
+        setErrorPopupOpen(true);
+      } else if (error.response.data.message === 'This email is already registered') {
+        setErrorType("Esse Email ja foi registrado");
+        setErrorPopupOpen(true);
       }
-     
-    
-    if(error.response.data.message=='This email is already registered'){
-      alert('Esse email ja esta cadastrado')
     }
-  }
   };
-  
 
   return (
     <div style={NewDeliveryPersonStyles.container}>
@@ -100,7 +99,6 @@ export default function DeliveryPerson() {
       </div>
       <div style={{ paddingLeft: '30px' }}>
         <div style={{ flex: 1 }}>
-          {/* Nome */}
           <div style={NewDeliveryPersonStyles.inputContainer}>
             <input
               type="text"
@@ -108,10 +106,9 @@ export default function DeliveryPerson() {
               onChange={(e) => setNomeValue(e.target.value)}
               placeholder="Nome"
               style={NewDeliveryPersonStyles.inputStyle}
+              aria-label='nome'
             />
           </div>
-
-          {/* CPF */}
           <div style={NewDeliveryPersonStyles.inputContainer}>
             <input
               type="text"
@@ -119,10 +116,9 @@ export default function DeliveryPerson() {
               onChange={(e) => setCpfValue(e.target.value)}
               placeholder="CPF"
               style={NewDeliveryPersonStyles.inputStyle}
+              aria-label='cpf'
             />
           </div>
-
-          {/* Telefone */}
           <div style={NewDeliveryPersonStyles.inputContainer}>
             <input
               type="text"
@@ -130,10 +126,9 @@ export default function DeliveryPerson() {
               onChange={(e) => setTelefoneValue(e.target.value)}
               placeholder="Telefone"
               style={NewDeliveryPersonStyles.inputStyle}
+              aria-label='telefone'
             />
           </div>
-
-          {/* Email */}
           <div style={NewDeliveryPersonStyles.inputContainer}>
             <input
               type="text"
@@ -141,26 +136,24 @@ export default function DeliveryPerson() {
               onChange={(e) => setEmailValue(e.target.value)}
               placeholder="Email"
               style={NewDeliveryPersonStyles.inputStyle}
+              aria-label='email'
             />
           </div>
-
-          {/* Endereço */}
           <div
             style={{ ...NewDeliveryPersonStyles.inputContainer, cursor: 'pointer' }}
             onClick={toggleEndereco}
           >
             <text style={{ fontSize: '16px', color: '#9ca3af' }}>Endereço</text>
           </div>
-
-          {/* Campos de endereço */}
           {enderecoOpen && (
             <div style={{ flexDirection: 'column', width: '400px' }}>
-                 <input
+              <input
                 type="text"
                 value={enderecoData.postalCode}
                 onChange={(e) => setEnderecoData({ ...enderecoData, postalCode: e.target.value })}
                 placeholder="CEP"
                 style={NewDeliveryPersonStyles.inputStyle}
+                aria-label='cep'
               />
               <input
                 type="text"
@@ -168,6 +161,7 @@ export default function DeliveryPerson() {
                 onChange={(e) => setEnderecoData({ ...enderecoData, street: e.target.value })}
                 placeholder="Rua"
                 style={NewDeliveryPersonStyles.inputStyle}
+                aria-label='rua'
               />
               <input
                 type="text"
@@ -175,6 +169,7 @@ export default function DeliveryPerson() {
                 onChange={(e) => setEnderecoData({ ...enderecoData, city: e.target.value })}
                 placeholder="Cidade"
                 style={NewDeliveryPersonStyles.inputStyle}
+                aria-label='cidade'
               />
               <input
                 type="text"
@@ -182,6 +177,7 @@ export default function DeliveryPerson() {
                 onChange={(e) => setEnderecoData({ ...enderecoData, district: e.target.value })}
                 placeholder="Bairro"
                 style={NewDeliveryPersonStyles.inputStyle}
+                aria-label='bairro'
               />
               <input
                 type="text"
@@ -189,6 +185,7 @@ export default function DeliveryPerson() {
                 onChange={(e) => setEnderecoData({ ...enderecoData, number: e.target.value })}
                 placeholder="Número"
                 style={NewDeliveryPersonStyles.inputStyle}
+                aria-label='numero'
               />
               <input
                 type="text"
@@ -196,6 +193,7 @@ export default function DeliveryPerson() {
                 onChange={(e) => setEnderecoData({ ...enderecoData, state: e.target.value })}
                 placeholder="Estado"
                 style={NewDeliveryPersonStyles.inputStyle}
+                aria-label='estado'
               />
               <input
                 type="text"
@@ -203,6 +201,7 @@ export default function DeliveryPerson() {
                 onChange={(e) => setEnderecoData({ ...enderecoData, complement: e.target.value })}
                 placeholder="Complemento"
                 style={NewDeliveryPersonStyles.inputStyle}
+                aria-label='complemento'
               />
               <input
                 type="text"
@@ -210,13 +209,13 @@ export default function DeliveryPerson() {
                 onChange={(e) => setEnderecoData({ ...enderecoData, reference: e.target.value })}
                 placeholder="Referência"
                 style={NewDeliveryPersonStyles.inputStyle}
+                aria-label='referencia'
               />
             </div>
           )}
         </div>
       </div>
 
-      {/* Pop-up de confirmação */}
       {confirmOpen && (
         <div style={NewDeliveryPersonStyles.confirmPopup}>
           <div style={NewDeliveryPersonStyles.confirmPopupInner}>
@@ -229,10 +228,24 @@ export default function DeliveryPerson() {
         </div>
       )}
 
-      {/* Mensagem "Entregador Criado" */}
-   
+      {successPopupOpen && (
+        <div style={NewDeliveryPersonStyles.confirmPopup}>
+          <div style={NewDeliveryPersonStyles.confirmPopupInner}>
+            <p>Entregador cadastrado com sucesso</p>
+            <button onClick={() => setSuccessPopupOpen(false)} style={NewDeliveryPersonStyles.confirmButton}>OK</button>
+          </div>
+        </div>
+      )}
 
-      {/* Botão Adicionar */}
+      {errorPopupOpen && (
+        <div style={NewDeliveryPersonStyles.confirmPopup}>
+          <div style={NewDeliveryPersonStyles.confirmPopupInner}>
+            <p>{`Ocorreu um erro ao cadastrar o entregador (${errorType})`}</p>
+            <button onClick={() => setErrorPopupOpen(false)} style={NewDeliveryPersonStyles.confirmButton}>OK</button>
+          </div>
+        </div>
+      )}
+
       <AddButton onClick={handleAddButtonClick} />
     </div>
   );

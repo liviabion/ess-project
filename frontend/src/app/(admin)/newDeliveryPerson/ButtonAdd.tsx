@@ -7,7 +7,7 @@ interface AddButtonProps {
 
 export default function AddButton({ onClick }: AddButtonProps) {
   return (
-    <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
+    <div style={{ position: 'absolute', marginTop: '800px', right: '20px' }}>
       <button
         style={{ backgroundColor: 'black', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
         onClick={onClick}

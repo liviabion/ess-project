@@ -73,7 +73,7 @@ export const EditDeliveryPersonStyles = {
     },
     confirmButton: {
       backgroundColor: 'black',
-      position: 'fixed' as const,
+      position: 'absolute' as const,
       color: 'white',
       padding: '5px 10px',
       borderRadius: '5px',

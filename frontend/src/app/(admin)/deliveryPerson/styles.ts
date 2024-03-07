@@ -69,7 +69,7 @@ export const DeliveryPersonStyles = {
     alignItems: 'center',
     marginLeft: '1700px',
     marginTop: '50px',
-    position: 'fixed' as const,
+    position: 'absolute' as const,
   },
   addButton: {
     backgroundColor: '#9B1127',
@@ -92,7 +92,7 @@ export const DeliveryPersonStyles = {
     alignItems: 'center',
     marginLeft: '1620px',
     marginTop: '900px',
-    position: 'fixed' as const,
+    position: 'absolute' as const
   },
   EditButton: {
     backgroundColor: '#9B1127',
