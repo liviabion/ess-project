@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import '../globals.css'
 import { Footer } from '@/components/footer'
 import Avaliações from './avaliações/page'
+import AvaliaçãoCliente from './avaliaçãoCliente/page'
 import { Red_Hat_Display } from 'next/font/google' 
 import { cn } from '@/lib/utils'
 
@@ -23,7 +24,7 @@ export default function AppLayout({
     <html lang="pt-br">
       <body className={cn('min-h-screen', redHatDisplay.className)}>
         <HeaderUser />
-        <Avaliações />
+        <AvaliaçãoCliente />
         <Footer />
       </body>
     </html>

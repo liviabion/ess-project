@@ -4,7 +4,7 @@ import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
 import RatingComponent from '@/components/ratings/ratings';
 
-export default function Avaliações() {
+export default function AvaliaçãoCliente() {
     return(
         <div style={{
             backgroundColor: '#FCF6F6',
@@ -41,6 +41,7 @@ export default function Avaliações() {
                 }}>
                     <RatingComponent/>
                     <RatingComponent/>
+                    <RatingComponent />
                 </div>
             </div>
 
