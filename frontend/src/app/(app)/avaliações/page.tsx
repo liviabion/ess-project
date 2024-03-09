@@ -8,7 +8,8 @@ export default function Avaliações() {
     return(
         <div style={{
             backgroundColor: '#FCF6F6',
-            height: '100vh',
+            minHeight: '100vh',
+            height: 'auto',
             display: 'flex',
             flexDirection: 'column',
         }}>
@@ -41,9 +42,12 @@ export default function Avaliações() {
                 }}>
                     <RatingComponent/>
                     <RatingComponent/>
+                    <RatingComponent/>
+                    <RatingComponent/>
+                    <RatingComponent/>
                 </div>
             </div>
-
+    
         </div>
     );
 }

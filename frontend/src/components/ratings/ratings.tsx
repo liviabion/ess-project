@@ -7,7 +7,8 @@ export default function RatingComponent() {
     return(
         <div style={{
             height: 'auto',
-            width: '1098px',
+            width: '70%',
+            minWidth: '700px',
             borderRadius: '20px',
             backgroundColor: '#FFFFFF',
             boxShadow: '0px 5px 3px 1px #00000080',
