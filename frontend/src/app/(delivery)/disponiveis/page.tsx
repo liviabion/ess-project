@@ -5,15 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { useDeliveryPerson } from "@/providers/deliveryPerson";
 import { ApiDeliveryNotification } from "@/services/deliveryNotification";
 import { BanIcon, CheckIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const deliveryPersonEmail = 'paula@gmail.com';
-
 export default function AvailablePages() {
   const { toast } = useToast();
+  const { deliveryPerson } = useDeliveryPerson();
   const [deliveries, setDeliveries] = useState<ApiDeliveryNotification.DeliveriesReturn[] | null>(null)
 
   const getDeliveries = async () => {
@@ -22,7 +22,7 @@ export default function AvailablePages() {
   }
 
   const handleRequestDelivery = async (id: number) => {
-    const response = await ApiDeliveryNotification.requestDelivery(id.toString(), { status: 'solicitada', deliveryPersonEmail });
+    const response = await ApiDeliveryNotification.requestDelivery(id.toString(), { status: 'solicitada', deliveryPersonEmail: deliveryPerson?.email });
     if (response.status === null) {
       toast({
         title: 'Erro ao solicitar entrega',
@@ -75,7 +75,7 @@ export default function AvailablePages() {
               <CardContent className="space-y-4 p-4">
                 <div>
                   <p className="text-2xl font-bold text-aury">Delivery {delivery.id}</p>
-                  <p className="text-lg text-aury">{delivery.item.length} itens</p>
+                  <p className="text-lg text-aury">{delivery.item.length} {delivery.item.length === 1 ? 'item' : 'itens'}</p>
                 </div>
                 
                 <div className="grid grid-cols-4 gap-4">

@@ -3,27 +3,27 @@
 import { AlertDialog, AlertDialogContent, AlertDialogTrigger, AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { ApiDeliveryNotification } from "@/services/deliveryNotification";
 import { BanIcon, RedoIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { deliveryStatusBadge } from "./utils";
-
-const deliveryPersonEmail = 'paula@gmail.com';
+import { useDeliveryPerson } from "@/providers/deliveryPerson";
+import { ApiSupport } from "@/services/support";
 
 export default function AvailablePages() {
   const { toast } = useToast();
+  const { deliveryPerson } = useDeliveryPerson();
   const [deliveries, setDeliveries] = useState<ApiDeliveryNotification.DeliveriesReturn[] | null>(null)
 
-  const getDeliveries = async () => {
+  const getDeliveries = async (deliveryPerson: ApiSupport.DeliveryPerson | null) => {
     const deliveries = await ApiDeliveryNotification.getAllDeliveries();
-    setDeliveries(deliveries.filter(delivery => delivery.deliveryPerson.email === deliveryPersonEmail));
+    setDeliveries(deliveries.filter(delivery => delivery.deliveryPerson && delivery.deliveryPerson.email === deliveryPerson?.email));
   }
 
   const handleRequestDelivery = async (id: number, updatedStatus: string) => {
-    const response = await ApiDeliveryNotification.updateDelivery(id.toString(), { status: updatedStatus, deliveryPersonEmail });
+    const response = await ApiDeliveryNotification.updateDelivery(id.toString(), { status: updatedStatus, deliveryPersonEmail: deliveryPerson?.email });
     if (response.status === null) {
       toast({
         title: 'Erro ao atualizar entrega',
@@ -39,13 +39,13 @@ export default function AvailablePages() {
         variant: 'success',
         duration: 10000,
       });
-      getDeliveries();
+      getDeliveries(deliveryPerson);
     }
   }
 
   useEffect(() => {
-    getDeliveries();
-  }, []);
+    getDeliveries(deliveryPerson);
+  }, [deliveryPerson]);
 
   if (!deliveries) {
     return (
@@ -58,7 +58,10 @@ export default function AvailablePages() {
   else if (deliveries.length === 0) {
     return (
       <div className="max-w-7xl space-y-4 flex flex-col items-center justify-center mx-auto my-4 px-4">
-        <p className="text-lg text-aury font-semibold text-center">Não há entregas pendentes nesse momento</p>
+        <p className="text-lg text-aury font-semibold text-center">Você não possui entregas, até o momento.</p>
+        <Button variant="aury" asChild className="px-5 py-2">
+          <Link href="/disponiveis" className="text-xl text-aury font-semibold text-center">Confira entregas disponíveis para você aqui!</Link>
+        </Button>
       </div>
     )
   }
@@ -80,7 +83,7 @@ export default function AvailablePages() {
                     <p className="text-2xl font-bold text-aury">Delivery {delivery.id}</p>
                     <p className={`text-sm font-semibold px-2 py-1 rounded text-white`} style={{ backgroundColor }}>{statusName}</p>
                   </div>
-                  <p className="text-lg text-aury">{delivery.item.length} itens</p>
+                  <p className="text-lg text-aury">{delivery.item.length} {delivery.item.length === 1 ? 'item' : 'itens'}</p>
                 </div>
                 
                 <div className="grid grid-cols-4 gap-4">

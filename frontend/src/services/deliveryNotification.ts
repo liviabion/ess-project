@@ -24,7 +24,7 @@ export namespace ApiDeliveryNotification {
       email: string;
       status: string;
       createdAt: Date;
-    };
+    } | null;
   };
 
   export async function getAllDeliveries(): Promise<DeliveriesReturn[]> {
