@@ -6,7 +6,7 @@ export interface AppRoute {
 export const appUserRoutes: AppRoute[] = [
   {
     name: 'Início',
-    path: '/'
+    path: '/home'
   },
   {
     name: 'Blusas',
