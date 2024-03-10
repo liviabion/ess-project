@@ -18,4 +18,14 @@ cuponsRouter.route('/:cuponsId')
     CuponsController.delete,
   );
 
+cuponsRouter.route('/')
+  .get(
+    CuponsController.findAll,
+  );
+
+cuponsRouter.route('/:cuponsName')
+  .get(
+    CuponsController.findByName,
+  );
+
 export default cuponsRouter;
