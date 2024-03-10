@@ -10,7 +10,9 @@ import { ApiDeliveryPerson } from '@/services/deliveryPerson';
 export default function DeliveryPerson() {
   const [showDiv, setShowDiv] = useState(false);
   const [cpfValue, setCpfValue] = useState(""); 
+  const [errorPopupOpen, setErrorPopupOpen] = useState(false);
   const [getExample, setGetExample] = useState<any>(null); 
+  const [errorType, setErrorType] = useState(""); 
   const [enderecoOpen, setEnderecoOpen] = useState(false);
   const router = useRouter();
 
@@ -24,8 +26,8 @@ export default function DeliveryPerson() {
       const example = await ApiDeliveryPerson.getExample(cpfValue);
       setGetExample(example);
     } catch (error) {
-      console.error("Erro ao obter informações do entregador:", error);
-      alert('Usuario nao encontrado')
+        setErrorType("Usuario nao encontrado");
+        setErrorPopupOpen(true);
     }
   };
 
@@ -199,6 +201,14 @@ export default function DeliveryPerson() {
           <text style={DeliveryPersonStyles.addButtonText}>+</text>
         </div>
       </div>
+      {errorPopupOpen && (
+        <div style={DeliveryPersonStyles.confirmPopup}>
+          <div style={DeliveryPersonStyles.confirmPopupInner}>
+            <p>{errorType}</p>
+            <button onClick={() => setErrorPopupOpen(false)} style={DeliveryPersonStyles.confirmButton}>OK</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

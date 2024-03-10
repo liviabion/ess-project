@@ -67,3 +67,18 @@ Then('eu vejo uma mensagem de {string}', async function (string) {
  await page.locator(string);
    
 });
+
+Given('eu estou na página de cadastro de entregadores', async function () {
+    browser = await chromium.launch({ headless: false });
+    page = await browser.newPage();
+    await page.goto('http://localhost:3000/newDeliveryPerson');
+});
+When('eu clico na opção de {string}', async function (string) {
+    await page.locator('text=Adicionar').click(string);
+});
+Then('eu vejo uma mensagem {string}', async function (string) {
+    // Aguarda até que o texto específico seja visível na página
+    // Verifica se o texto está presente na página
+ await page.locator(string);
+   
+});

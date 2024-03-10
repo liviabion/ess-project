@@ -7,6 +7,7 @@ import { ApiDeliveryPerson } from '@/services/deliveryPerson'; // Importe ApiDel
 export default function DeliveryPerson() {
   const [nomeValue, setNomeValue] = useState("");
   const [cpfValue, setCpfValue] = useState("");
+  
   const [telefoneValue, setTelefoneValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [ruaValue, setRuaValue] = useState("");

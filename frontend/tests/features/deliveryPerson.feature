@@ -20,3 +20,62 @@ Scenario: Cadastro de entregador
     When eu confirmo com a opção "Sim" 
     Then eu vejo uma mensagem de "Entregador cadastrado com sucesso"
 
+Scenario: Falha em cadastro de entregador
+    Given eu estou na página de entregadores
+    When eu seleciono "+"
+    When eu preencho o campo de "Nome" com "Bea"
+    When eu preencho o campo de "CPF" com "12345678900"
+    When eu preencho o campo de "Telefone" com "81900000000"
+    When eu preencho o campo de "Email" com "bea@example.com"
+    When eu clico em "Endereço"
+    When eu preencho o campo de "Cep" com "00000000"
+    When eu preencho o campo de "Rua" com "Rua das Flores"
+    When eu preencho o campo de "Cidade" com "Cidade Exemplo"
+    When eu preencho o campo de "Bairro" com "Bairro Exemplo"
+    When eu preencho o campo de "Numero" com "123"
+    When eu preencho o campo de "Estado" com "pernambuco"
+    When eu preencho o campo de "Complemento" com "Apartamento 101"
+    When eu preencho o campo de "Referencia" com "Próximo à praça central"
+    When eu clico na opção "Adicionar"
+    When eu confirmo com a opção "Sim" 
+    Then eu vejo uma mensagem de "Entregador cadastrado com sucesso"
+    When eu clico na opção de "Adicionar" 
+    Then eu vejo uma mensagem "Ocorreu um erro ao cadastrar o entregador (Esse CPF ja foi registrado)"
+
+Scenario: Mudança de característica
+    Given eu estou na página de entregadores
+    When eu seleciono "+"
+    When eu preencho o campo de "Nome" com "Bea"
+    When eu preencho o campo de "CPF" com "12345678900"
+    When eu preencho o campo de "Telefone" com "81900000000"
+    When eu preencho o campo de "Email" com "bea@example.com"
+    When eu clico em "Endereço"
+    When eu preencho o campo de "Cep" com "00000000"
+    When eu preencho o campo de "Rua" com "Rua das Flores"
+    When eu preencho o campo de "Cidade" com "Cidade Exemplo"
+    When eu preencho o campo de "Bairro" com "Bairro Exemplo"
+    When eu preencho o campo de "Numero" com "123"
+    When eu preencho o campo de "Estado" com "pernambuco"
+    When eu preencho o campo de "Complemento" com "Apartamento 101"
+    When eu preencho o campo de "Referencia" com "Próximo à praça central"
+    When eu clico na opção "Adicionar"
+    When eu confirmo com a opção "Sim" 
+    Then eu vejo uma mensagem de "Entregador cadastrado com sucesso"
+    When eu clico na opção de "Adicionar" 
+    When eu vejo uma mensagem "Ocorreu um erro ao cadastrar o entregador (Esse CPF ja foi registrado)"
+    When eu volto para a página de entregadores
+    When eu clico em "CPF"
+    When eu pesquiso em "12345678900"
+    When eu clico em "Editar Dados"
+    When eu clico em "Bea"
+    When eu digito "Paula"
+    When eu clico em "Atualizar"
+    When eu clico em "Sim"
+    Then eu vejo a mensagem "Dados atualizados"
+
+Scenario: Falha mudança de característica
+ Given eu estou na página de entregadores
+ When eu selecione "CPF" 
+ When eu pesquiso poe "0"
+ Then eu vejo a mensagem "Usuario nao encontrado"
+ 

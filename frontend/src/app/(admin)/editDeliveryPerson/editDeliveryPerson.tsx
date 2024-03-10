@@ -135,7 +135,7 @@ export default function DeliveryPerson() {
   
       await ApiDeliveryPerson.updateUser(cpfUser, data);
       await ApiDeliveryPerson.updateAddress(cpfUser, addressData);
-      alert("Dados atualizados!")
+      alert("Dados atualizados")
     } catch (error) {
       console.error("Erro ao atualizar informações:", error);
     } finally {
@@ -304,6 +304,7 @@ export default function DeliveryPerson() {
       <button onClick={handleUpdateButtonClick} style={EditDeliveryPersonStyles.confirmButton}>
         Atualizar
       </button>
+      
     </div>
   );
 }

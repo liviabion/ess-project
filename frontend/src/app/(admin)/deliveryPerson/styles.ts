@@ -110,4 +110,34 @@ export const DeliveryPersonStyles = {
     fontSize: '24px',
    
   },
+  confirmButton: {
+    backgroundColor: 'black',
+    color: 'white',
+    padding: '5px 10px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    marginRight: '10px'
+  },    confirmPopup: {
+
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+
+    display: 'flex',
+  textAlign: 'center' as const,
+    justifyContent: 'center'
+  },
+  confirmPopupInner: {
+      position: 'fixed' as const,
+  top: '50%', /* Mantém o pop-up no meio verticalmente */
+  left: '50%', /* Mantém o pop-up no meio horizontalmente */
+  transform: 'translate(-50%, -50%)', /* Centraliza o pop-up na tela */
+    backgroundColor: 'white',
+    padding: '20px',
+    borderRadius: '5px',
+    boxShadow: '0px 0px 10px rgba(0,0,0,0.5)',
+    textAlign: 'center' as const
+  },
 };
