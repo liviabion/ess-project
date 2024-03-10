@@ -15,7 +15,8 @@ interface SaleProps {
 
 export default function PromotionComponent (props: SaleProps) {
   return (
-    <div className="flex flex-col items-center p-0">
+    <div className="flex flex-col items-center pb-5">
+      <div style={{borderRadius: 10, boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)'}}>
         <div className='flex flex-row m-10 justify-between' style={{width: 450, height: 20}}>
             <div className="flex flex-col items-start ">
                 <div className="flex flex-row items-start">
@@ -35,6 +36,7 @@ export default function PromotionComponent (props: SaleProps) {
               </button>
             </div>
         </div>
+      </div>
     </div>
   );
 }
