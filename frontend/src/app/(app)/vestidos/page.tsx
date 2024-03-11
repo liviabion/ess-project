@@ -3,14 +3,12 @@ import React, { useState, useEffect } from "react";
 import { ItensStyles } from "./styles";
 import {
   BlacLine,
-
-  Add,
+Pencil
 } from "./assets";
 import { ApiItens } from "@/services/itens";
-import { Modal2 } from '@/components/creations/modals'
-import { Carousel } from '@/components/carousel/carousel'
+import { Carousel2 } from '@/components/carouselHome/carousel'
 
-export default function Itens() {
+export default function Vestidos() {
   const [categories, setCategories] = useState<string[]>([]); // State to store unique categories
 
   interface createItem {
@@ -23,10 +21,7 @@ export default function Itens() {
     colors: string,
     sizes: string,
     amount: number,
-}
-const [selectedItem, setSelectedItem] = useState<{ id: number, category: string } | null>(null);
-const [createdItem, setCreateItem] = useState(null);
-
+  }
   
   const [items, setItems] = useState<createItem[]>([]); // Specify the type for items
   useEffect(() => {
@@ -48,36 +43,27 @@ const [createdItem, setCreateItem] = useState(null);
       console.error("Erro ao obter informações:", error);
     }
   };
-  const handleAddClick = (itemIndex: any) => {
-    setCreateItem((prevCreateItem) =>
-      prevCreateItem === itemIndex ? null : itemIndex
-    );
-    setSelectedItem(null);
-  };
+
   return (
     <div style={ItensStyles.container}>
       <img
+        src={Pencil.src}
+        alt="Capa"
+        style={{ width: "100%",paddingBottom: "40px" }}
+      />
+      <img
         src={BlacLine.src}
         alt="Linha preta"
-        style={{ width: "318px", height: "27px" }}
+        style={{ width: "300px", height: "20px"}}
       />
       <div style={{display:'flex', justifyContent:'space-between', padding:'0 25px 0 20px'}}>
-      <text style={ItensStyles.title}>Adicionar Itens</text>
-      <img
-              src={Add.src}
-              alt="Adicionar"
-              style={{ width: "50px", height: "68px", cursor: "pointer" }}
-              onClick={() => handleAddClick(1)}
-            /> </div>
-       {createdItem !== null && (
-                  <Modal2 />
+      <text style={ItensStyles.title}>Vestidos</text>
+     </div>
+       <Carousel2
+          category="Vestidos"
+         categoryIndex={0}/>
+    <button style={ItensStyles.cartButton}>Ir para o Carrinho</button>
 
-        )}
-      {categories.map((category, categoryIndex) => (
-        <Carousel
-          category={category}
-         categoryIndex={categoryIndex}/>
-    ))}
     </div>
   );
 }

@@ -3,14 +3,12 @@ import React, { useState, useEffect } from "react";
 import { ItensStyles } from "./styles";
 import {
   BlacLine,
-
-  Add,
+Pencil
 } from "./assets";
 import { ApiItens } from "@/services/itens";
-import { Modal2 } from '@/components/creations/modals'
-import { Carousel } from '@/components/carousel/carousel'
+import { Carousel2 } from '@/components/carouselHome/carousel'
 
-export default function Itens() {
+export default function Inicio() {
   const [categories, setCategories] = useState<string[]>([]); // State to store unique categories
 
   interface createItem {
@@ -24,10 +22,8 @@ export default function Itens() {
     sizes: string,
     amount: number,
 }
-const [selectedItem, setSelectedItem] = useState<{ id: number, category: string } | null>(null);
-const [createdItem, setCreateItem] = useState(null);
+  const [firstItemsByCategory, setFirstItemsByCategory] = useState<createItem[]>([]);
 
-  
   const [items, setItems] = useState<createItem[]>([]); // Specify the type for items
   useEffect(() => {
     getItens();
@@ -37,47 +33,51 @@ const [createdItem, setCreateItem] = useState(null);
     try {
       const fetchedItems: createItem[] = await ApiItens.getItens();
       console.log("Fetched Items:", fetchedItems);
-  
+
       // Extract unique categories from the fetched items
       const uniqueCategories = Array.from(new Set(fetchedItems.map(item => item.category)));
       setCategories(uniqueCategories);
-  
+
       // Set the items state
       setItems(fetchedItems);
+
+      // Create a list with the first item of each category
+      const firstItems: { [key: string]: createItem } = fetchedItems.reduce((acc, item) => {
+        if (!acc[item.category]) {
+          acc[item.category] = item;
+        }
+        return acc;
+      }, {} as { [key: string]: createItem }); // Add index signature to the object type
+
+      // Convert the object to an array
+      const firstItemsArray = Object.values(firstItems);
+      setFirstItemsByCategory(firstItemsArray);
+
     } catch (error) {
       console.error("Erro ao obter informações:", error);
     }
-  };
-  const handleAddClick = (itemIndex: any) => {
-    setCreateItem((prevCreateItem) =>
-      prevCreateItem === itemIndex ? null : itemIndex
-    );
-    setSelectedItem(null);
-  };
+ };
+
   return (
     <div style={ItensStyles.container}>
       <img
+        src={Pencil.src}
+        alt="Capa"
+        style={{ width: "100%",paddingBottom: "40px" }}
+      />
+      <img
         src={BlacLine.src}
         alt="Linha preta"
-        style={{ width: "318px", height: "27px" }}
+        style={{ width: "300px", height: "20px"}}
       />
       <div style={{display:'flex', justifyContent:'space-between', padding:'0 25px 0 20px'}}>
-      <text style={ItensStyles.title}>Adicionar Itens</text>
-      <img
-              src={Add.src}
-              alt="Adicionar"
-              style={{ width: "50px", height: "68px", cursor: "pointer" }}
-              onClick={() => handleAddClick(1)}
-            /> </div>
-       {createdItem !== null && (
-                  <Modal2 />
+      <text style={ItensStyles.title}>Tendências</text>
+     </div>
+       <Carousel2
+          category="Calças"
+         categoryIndex={0}/>
+    <button style={ItensStyles.cartButton}>Ir para o Carrinho</button>
 
-        )}
-      {categories.map((category, categoryIndex) => (
-        <Carousel
-          category={category}
-         categoryIndex={categoryIndex}/>
-    ))}
     </div>
   );
 }
