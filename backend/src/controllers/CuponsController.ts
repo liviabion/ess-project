@@ -64,9 +64,9 @@ class CuponsController {
 
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            const { cupomId } = req.params;
+            const { cuponsId } = req.params;
 
-            const cupom = await CuponsRepository.delete(Number(cupomId));
+            const cupom = await CuponsRepository.delete(Number(cuponsId));
 
             if (!cupom) {
                 return next({
