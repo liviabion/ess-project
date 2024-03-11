@@ -14,12 +14,16 @@ class ItensController {
                 message: 'Item already exists',
             });
         }
-        if (!itemData.name || !itemData.amount || !itemData.description || !itemData.price || !itemData.image || !itemData.colors || !itemData.sizes || !itemData.category) {
+        const requiredFields = ['name', 'amount', 'description', 'price', 'image', 'colors', 'sizes', 'category'];
+        for (const field of requiredFields) {
+          if (!itemData[field as keyof typeof itemData]) {
             return next({
-                status: 400,
-                message: 'Missing required fields',
+              status: 400,
+              message: `${field.charAt(0).toUpperCase() + field.slice(1)} is required`,
             });
+          }
         }
+
         const item = await ItensRepository.create(itemData);
 
         res.locals = {
