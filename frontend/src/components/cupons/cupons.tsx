@@ -6,6 +6,7 @@ import { trash, sale, add } from './assets';
 import { ApiCupons } from '@/services/cupons';
 import { useForm, SubmitHandler} from 'react-hook-form';
 
+
 interface CuponsProps {
   id: number;
   name: string;
@@ -35,13 +36,13 @@ export const ModalAddCupom = () => {
       <div className='flex justify-end'>
         <button
           onClick={() => setShowModal(true)} 
-          className='bg-rose-700 h-50 w-105 rounded-md flex' style={{width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}}
+          className='h-50 w-105 rounded-md flex mr-5' style={{width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}}
         >
           <Image
             src={add}
             alt="Adicionar"
-            width={24}
-            height={24}
+            width={60}
+            height={60}
           />
         </button>
       </div>

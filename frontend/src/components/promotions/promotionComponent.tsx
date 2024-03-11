@@ -85,7 +85,7 @@ export function ModalPromotion() {
   };
 
   return (
-    <div>
+    <div className='m-4'>
       <button
         onClick={() => setShowModal(true)}
         className='bg-rose-700 h-50 w-105 rounded-md'
@@ -124,8 +124,6 @@ export function ModalPromotion() {
           
         </>
       ) : null}
-
-
     </div>
     );
 }
@@ -151,13 +149,14 @@ export function ModalAddPromotion() {
      <div>
        <button
          onClick={() => setShowModal(true)}
-         className='bg-rose-700 h-50 w-105 rounded-md'
+         className='bg-rose-700 h-50 w-105 rounded-md p-1' 
+         style={{width: 60, justifyContent: 'center', alignItems:'center', display: 'flex'}}
        >
          <Image
            src={add}
            alt="Icone de mais"
-           width={30}
-           height={30}
+           width={23}
+           height={20}
          />
        </button>
        {showModal ? (
