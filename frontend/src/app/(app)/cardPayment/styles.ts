@@ -91,7 +91,6 @@ export const CardPaymentStyles = {
     alignItems: 'center',
     marginLeft: '1620px',
     marginTop: '900px',
-    position: 'fixed' as const,
   },
   EditButton: {
     backgroundColor: '#9B1127',
