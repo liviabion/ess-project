@@ -88,3 +88,31 @@ Then('deverá aparecer um pop-up com título {string} e a descrição {string}',
   });
   await browser.close();
 });
+
+// Scenario: Impossibilidade de Atualizar Entrega em Deslocamento para Solicitada
+
+Given('o usuário está na página {string}', async function (string) {
+  browser = await chromium.launch({ headless: false });
+  page = await browser.newPage();
+  await page.goto(`http://localhost:3000/${string}`);
+});
+
+When('o usuário clica no botão com texto {string} na primeira entrega existente', async function (string) {
+  await page.click(`text=${string}`);
+});
+
+Then('o usuário deve clicar em {string} no modal, pois não é possível atualizar uma entrega em deslocamento para solicitada', async function (string) {
+  await page.on('popup', async (popup) => {
+    await popup.click(`text=${string}`);
+  });
+  await browser.close();
+});
+
+// Scenario: Impossibilidade de Atualizar Entrega Entregue para Deslocamento
+
+Then('o usuário deve clicar em {string} no modal, pois não é possível atualizar uma entrega entregue para deslocamento', async function (string) {
+  await page.on('popup', async (popup) => {
+    await popup.click(`text=${string}`);
+  });
+  await browser.close();
+});
