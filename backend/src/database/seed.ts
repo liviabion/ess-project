@@ -14,8 +14,8 @@ async function seed() {
 
   const itemsToCreate: Prisma.ItemCreateInput[] = [
     {
-      name: 'Blusa1',
-      description: 'Cadeira de escritório',
+      name: 'Blusa Polo',
+      description: 'Chique mas não tão confortável',
       category: 'Blusa',
       price: 50,
       image: 'https://www.google.com.br',
@@ -24,8 +24,8 @@ async function seed() {
       amount: 10,
     },
     {
-      name: 'Blusa2',
-      description: 'Cadeira de escritório',
+      name: 'Blusa Luan Santana',
+      description: 'A lua até beijou o mar...',
       category: 'Blusa',
       price: 50,
       image: 'https://www.google.com.br',
@@ -34,8 +34,8 @@ async function seed() {
       amount: 10,
     },
     {
-      name: 'Blusa3',
-      description: 'Cadeira de escritório',
+      name: 'Blusa Metallica',
+      description: 'Blusa braba, banda incrível, só benefícios!',
       category: 'Blusa',
       price: 50,
       image: 'https://www.google.com.br',
@@ -74,6 +74,15 @@ async function seed() {
   ];
 
   const deliveriesId: number[] = [];
+
+  const delivery1 = prisma.delivery.create({
+    data: {
+      status: 'entregue',
+      item: {
+        connect: [{ id: itemsId[0] }, { id: itemsId[1] }, { id: itemsId[2] }]
+      },
+    },
+  });
 
   deliveries.forEach(async (delivery) => {
     const createdDelivery = await prisma.delivery.create({

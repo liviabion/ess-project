@@ -3,8 +3,9 @@ import { useRouter } from 'next/navigation'
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
 import RatingComponent from '@/components/ratings/ratings';
+import LinkComponent from '@/components/link/link';
 
-export default function Avaliações() {
+export default function LinkAvaliações() {
     return(
         <div style={{
             backgroundColor: '#FCF6F6',
@@ -27,28 +28,24 @@ export default function Avaliações() {
 
                 <div style={{
                     padding: '20px',
-                    display: 'flex',
-                    flexDirection: 'row',
                 }}>
                     <text style={{
                         color: '#9B1127',
-                        fontSize: '50px',
+                        fontSize: '40px',
                         fontFamily: 'Red Hat Display, sans-serif',
-                        marginRight: '20px'
-                    }} className='font-bold'>Avaliações</text>
-                    <Rating style={{ maxWidth: 250, marginBottom: '5px' }} value={3} readOnly={true}/>
+                    }} className='font-bold'>Compra concluída com sucesso.</text>
                 </div>
                 
                 <div style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    marginTop: '20px'
+                    alignItems: 'center',
+                    marginTop: '30px'
                 }}>
-                    <RatingComponent/>
-                    <RatingComponent/>
-                    <RatingComponent/>
-                    <RatingComponent/>
-                    <RatingComponent/>
+                    <LinkComponent itemName='calça'/>
+                    <LinkComponent itemName='camisa'/>
+                    <LinkComponent itemName='meia'/>
+                    <LinkComponent itemName='tênis'/>
                 </div>
             </div>
     

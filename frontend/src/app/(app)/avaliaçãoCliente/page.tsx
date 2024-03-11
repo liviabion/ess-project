@@ -30,11 +30,15 @@ export default function AvaliaçãoCliente() {
 
                 <div style={{
                     padding: '20px',
+                    display: 'flex',
+                    flexDirection: 'row',
                 }}>
                     <text style={{
                         color: '#9B1127',
-                        fontSize: '50px'
+                        fontSize: '50px',
+                        marginRight: '20px',
                     }} className='font-bold'>Avaliações</text>
+                    <Rating style={{ maxWidth: 250, marginBottom: '5px' }} value={3} readOnly={true}/>
                 </div>
                 
                 <div style={{
