@@ -61,14 +61,14 @@ export default function DeliveryPerson() {
         <text style={DeliveryPersonStyles.title}>Entregadores</text>
       </div>
       <div style={DeliveryPersonStyles.inputContainer}>
-        <div style={DeliveryPersonStyles.inputWrapper}>
+        <div style={DeliveryPersonStyles.inputWrapper} onClick={toggleDiv}>
           <text style={DeliveryPersonStyles.inputLabel}>CPF</text>
           <Image
             src={SearchIcon}
             alt="Ícone de pesquisa"
             width={40}
             height={40}
-            onClick={toggleDiv}
+           
             style={DeliveryPersonStyles.searchIcon}
           />
         </div>
@@ -81,15 +81,19 @@ export default function DeliveryPerson() {
               onKeyPress={handleKeyPress} 
               placeholder="Digite o CPF"
               style={DeliveryPersonStyles.input}
+              aria-label='pesquisa_cpf'
             />
+            <div >
             <Image
               src={Arrow}
-              alt="Ícone de seta"
+              alt="seta"
               width={40}
               height={40}
               onClick={handleArrowClick} 
               style={DeliveryPersonStyles.searchIcon}
             />
+            </div>
+          
           </div>
         )}
       </div>
@@ -188,7 +192,7 @@ export default function DeliveryPerson() {
       )} 
       { getExample && (
  <div style={DeliveryPersonStyles.EditButtonContainer}>
- <div style={DeliveryPersonStyles.EditButton}onClick={EditButtonClick}>
+ <div style={DeliveryPersonStyles.EditButton}onClick={EditButtonClick} aria-label='editar_dados'>
    <text style={DeliveryPersonStyles.EditButtonText}>Editar Dados</text>
  </div>
  </div>

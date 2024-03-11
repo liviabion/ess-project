@@ -159,6 +159,7 @@ export default function DeliveryPerson() {
               onChange={(e) => seteditUserData({...editUserData,name: e.target.value })}
               placeholder={nomeValue ? nomeValue : "Nome"}
               style={EditDeliveryPersonStyles.inputStyle}
+              aria-label='nome'
             />
           </div>
 

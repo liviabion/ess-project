@@ -143,6 +143,7 @@ export default function DeliveryPerson() {
           <div
             style={{ ...NewDeliveryPersonStyles.inputContainer, cursor: 'pointer' }}
             onClick={toggleEndereco}
+            aria-label='endereco'
           >
             <text style={{ fontSize: '16px', color: '#9ca3af' }}>Endereço</text>
           </div>
