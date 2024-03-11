@@ -39,7 +39,7 @@ export const ModalAddCupom = () => {
         >
           <Image
             src={add}
-            alt="Icone de mais"
+            alt="Adicionar"
             width={24}
             height={24}
           />
