@@ -94,6 +94,43 @@ defineFeature(feature, test => {
     });
   })
 
+  // Scenario: Notificação de Entrega em Deslocamento para Pessoa Entregadora
+  // Given uma entrega com id "1" que possui os campos: status "solicitada"
+  // When o servidor recebe uma requisição PATCH na rota "/delivery-notifications/1" com campos: status "deslocamento", deliveryPersonEmail "ricardo@root.com.br"
+  // Then a entrega com id "1" atualizará o campo de status para "deslocamento"
+  // And a resposta deve conter os campos: deliveryPersonEmail "ricardo@root.com.br", category "delivery-status", title "Entrega 1 em deslocamento"
+
+  test('Notificação de Entrega em Deslocamento para Pessoa Entregadora', ({ given, when, then, and }) => {
+    let delivery: any;
+    let notification: any;
+
+    given(/^uma entrega com id "(.*)" que possui os campos: status "(.*)"$/, async (id, status) => {
+      const newDelivery = await prismaTestClient.delivery.create({
+        data: { id: Number(id), status }
+      })
+      delivery = await prismaTestClient.delivery.findUnique({ where: { id: newDelivery.id } })
+      expect(delivery?.id).toBe(Number(id))
+      expect(delivery?.status).toBe(status)
+    });
+
+    when(/^o servidor recebe uma requisição PATCH na rota "(.*)" com campos: status "(.*)", deliveryPersonEmail "(.*)"$/, async (route, status, deliveryPersonEmail) => {
+      apiResponse = await request(app).patch(route).send({ status, deliveryPersonEmail })
+    });
+
+    then(/^a entrega com id "(.*)" atualizará o campo de status para "(.*)"$/, async (id, status) => {
+      const updatedDelivery = await prismaTestClient.delivery.findUnique({ where: { id: Number(id) } })
+      expect(updatedDelivery?.status).toBe(status)
+    });
+
+    and(/^a resposta deve conter os campos: deliveryPersonEmail "(.*)", category "(.*)", title "(.*)"$/, async (deliveryPersonEmail, category, title) => {
+      notification = apiResponse.body.data.notification
+      delivery = apiResponse.body.data.deliveryPersonEmail
+      expect(delivery).toBe(deliveryPersonEmail)
+      expect(notification.category).toBe(category)
+      expect(notification.title).toBe(title)
+    });
+  })
+
   // Scenario: Notificação de Entrega Realizada para Pessoa Entregadora
   // Given uma entrega com id "1" que possui os campos: status "deslocamento"
   // When o servidor recebe uma requisição PATCH na rota "/delivery-notifications/1" com campos: status "entregue", deliveryPersonEmail "ricardo@root.com.br"

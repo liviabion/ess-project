@@ -15,6 +15,12 @@ Scenario: Falha ao Notificar Nova Entrega
   When uma requisição POST é feita para o endpoint "/delivery-notifications/1" com campos: status "solicitada", deliveryPersonEmail "ricardo@root.com.br"
   Then o sistema deve retornar uma resposta com status "400" e a mensagem de erro "Status inválido para notificação de nova entrega"
 
+Scenario: Notificação de Entrega em Deslocamento para Pessoa Entregadora
+  Given uma entrega com id "1" que possui os campos: status "solicitada"
+  When o servidor recebe uma requisição PATCH na rota "/delivery-notifications/1" com campos: status "deslocamento", deliveryPersonEmail "ricardo@root.com.br"
+  Then a entrega com id "1" atualizará o campo de status para "deslocamento"
+  And a resposta deve conter os campos: deliveryPersonEmail "ricardo@root.com.br", category "delivery-status", title "Entrega 1 em deslocamento"
+
 Scenario: Notificação de Entrega Realizada para Pessoa Entregadora
   Given uma entrega com id "1" que possui os campos: status "deslocamento"
   When o servidor recebe uma requisição PATCH na rota "/delivery-notifications/1" com campos: status "entregue", deliveryPersonEmail "ricardo@root.com.br"

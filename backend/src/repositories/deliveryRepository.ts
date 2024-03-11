@@ -27,7 +27,12 @@ class DeliveryRepository {
     }
 
     async findAll(): Promise<Delivery[]> {
-        const delivery = await prisma.delivery.findMany();
+        const delivery = await prisma.delivery.findMany({
+          include: {
+            item: true,
+            deliveryPerson: true
+          }
+        });
         return delivery;
     }
 }
