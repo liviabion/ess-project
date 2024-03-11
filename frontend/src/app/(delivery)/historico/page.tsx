@@ -19,7 +19,11 @@ export default function AvailablePages() {
 
   const getDeliveries = async (deliveryPerson: ApiSupport.DeliveryPerson | null) => {
     const deliveries = await ApiDeliveryNotification.getAllDeliveries();
-    setDeliveries(deliveries.filter(delivery => delivery.deliveryPerson && delivery.deliveryPerson.email === deliveryPerson?.email));
+    setDeliveries(
+      deliveries
+        .filter(delivery => delivery.deliveryPerson && delivery.deliveryPerson.email === deliveryPerson?.email)
+        .reverse()
+    );
   }
 
   const handleRequestDelivery = async (id: number, updatedStatus: string) => {
