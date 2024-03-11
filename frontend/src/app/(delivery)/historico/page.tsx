@@ -51,96 +51,92 @@ export default function AvailablePages() {
     getDeliveries(deliveryPerson);
   }, [deliveryPerson]);
 
-  if (!deliveries) {
-    return (
-      <div className="max-w-7xl space-y-4 flex flex-col items-center justify-center mx-auto my-4 px-4">
-        <p className="text-lg text-aury font-semibold text-center">Carregando...</p>
-      </div>
-    )
-  }
-
-  else if (deliveries.length === 0) {
-    return (
-      <div className="max-w-7xl space-y-4 flex flex-col items-center justify-center mx-auto my-4 px-4">
-        <p className="text-lg text-aury font-semibold text-center">Você não possui entregas, até o momento.</p>
-        <Button variant="aury" asChild className="px-5 py-2">
-          <Link href="/disponiveis" className="text-xl text-aury font-semibold text-center">Confira entregas disponíveis para você aqui!</Link>
-        </Button>
-      </div>
-    )
-  }
-
   return (
     <div className="max-w-7xl space-y-4 flex flex-col items-center justify-center mx-auto my-4 px-4">
-      <h1 className="text-2xl font-bold text-aury text-center">
-        Seu histórico de entregas
-      </h1>
       {
-        deliveries.map((delivery) => {
-          const { name: statusName, color: backgroundColor, updateToStatus } = deliveryStatusBadge[delivery.status]
-          const updateToStatusName = updateToStatus === '' ? null : deliveryStatusBadge[updateToStatus].name;
-          return (
-            <Card key={delivery.id} className="w-full border border-aury">
-              <CardContent className="space-y-4 p-4">
-                <div>
-                  <div className="flex gap-4 items-center">
-                    <p className="text-2xl font-bold text-aury">Delivery {delivery.id}</p>
-                    <p className={`text-sm font-semibold px-2 py-1 rounded text-white`} style={{ backgroundColor }}>{statusName}</p>
-                  </div>
-                  <p className="text-lg text-aury">{delivery.item.length} {delivery.item.length === 1 ? 'item' : 'itens'}</p>
-                </div>
-                
-                <div className="grid grid-cols-4 gap-4">
-                  {
-                    delivery.item.map(item => {
-                      return (
-                        <Card key={item.id} className="w-full border border-aury">
-                          <CardContent className="flex items-center justify-start space-x-4 p-4 text-aury">
-                              <p className="text-lg font-semibold">{item.name}</p>
-                              <p className="text-sm font-semibold px-2 py-1 rounded bg-aury text-white">{item.category}</p>
-                          </CardContent>
-                        </Card>
-                      )
-                    })
-                  }
-                </div>
+        !deliveries ? (
+          <p className="text-lg text-aury font-semibold text-center">Carregando...</p>
+        ) : deliveries.length === 0 ? (
+          <>
+            <p className="text-lg text-aury font-semibold text-center">Você não possui entregas, até o momento.</p>
+            <Button variant="aury" asChild className="px-5 py-2">
+              <Link href="/disponiveis" className="text-xl text-aury font-semibold text-center">Confira entregas disponíveis para você aqui!</Link>
+            </Button>
+          </>
+        ) : (
+          <>
+            <h1 className="text-2xl font-bold text-aury text-center">
+              Seu histórico de entregas
+            </h1>
+            {
+              deliveries.map((delivery) => {
+                const { name: statusName, color: backgroundColor, updateToStatus } = deliveryStatusBadge[delivery.status]
+                const updateToStatusName = updateToStatus === '' ? null : deliveryStatusBadge[updateToStatus].name;
+                return (
+                  <Card key={delivery.id} className="w-full border border-aury">
+                    <CardContent className="space-y-4 p-4">
+                      <div>
+                        <div className="flex gap-4 items-center">
+                          <p className="text-2xl font-bold text-aury">Delivery {delivery.id}</p>
+                          <p className={`text-sm font-semibold px-2 py-1 rounded text-white`} style={{ backgroundColor }}>{statusName}</p>
+                        </div>
+                        <p className="text-lg text-aury">{delivery.item.length} {delivery.item.length === 1 ? 'item' : 'itens'}</p>
+                      </div>
+                      
+                      <div className="grid grid-cols-4 gap-4">
+                        {
+                          delivery.item.map(item => {
+                            return (
+                              <Card key={item.id} className="w-full border border-aury">
+                                <CardContent className="flex items-center justify-start space-x-4 p-4 text-aury">
+                                    <p className="text-lg font-semibold">{item.name}</p>
+                                    <p className="text-sm font-semibold px-2 py-1 rounded bg-aury text-white">{item.category}</p>
+                                </CardContent>
+                              </Card>
+                            )
+                          })
+                        }
+                      </div>
 
-                {
-                  updateToStatusName && (
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="aury">Atualizar para {updateToStatusName}</Button>
-                      </AlertDialogTrigger>
+                      {
+                        updateToStatusName && (
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="aury">Atualizar para {updateToStatusName}</Button>
+                            </AlertDialogTrigger>
 
-                      <AlertDialogContent>
+                            <AlertDialogContent>
 
-                        <AlertDialogHeader>
-                          <AlertDialogTitle className="text-aury">Confirma que deseja atualizar a entrega {delivery.id} para {updateToStatusName}?</AlertDialogTitle>
-                          <AlertDialogDescription className="text-aury">
-                            Ao confirmar, a entrega será atualizada para {updateToStatusName} e você será notificado
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle className="text-aury">Confirma que deseja atualizar a entrega {delivery.id} para {updateToStatusName}?</AlertDialogTitle>
+                                <AlertDialogDescription className="text-aury">
+                                  Ao confirmar, a entrega será atualizada para {updateToStatusName} e você será notificado
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
 
-                        <AlertDialogFooter>
-                          <AlertDialogCancel className="border-aury text-aury gap-2">
-                            <BanIcon size={24} />
-                            Voltar
-                          </AlertDialogCancel>
-                          <AlertDialogAction className="border-aury bg-aury gap-2" onClick={() => handleRequestDelivery(delivery.id, updateToStatus)}>
-                            <RedoIcon size={24} />
-                            Atualizar
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel className="border-aury text-aury gap-2">
+                                  <BanIcon size={24} />
+                                  Voltar
+                                </AlertDialogCancel>
+                                <AlertDialogAction className="border-aury bg-aury gap-2" onClick={() => handleRequestDelivery(delivery.id, updateToStatus)}>
+                                  <RedoIcon size={24} />
+                                  Atualizar
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
 
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  )
-                }
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        )
+                      }
 
-              </CardContent>
-            </Card>
-          )
-        })
+                    </CardContent>
+                  </Card>
+                )
+              })
+            }
+          </>
+        )
       }
     </div>
   )
