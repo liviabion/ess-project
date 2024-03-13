@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'
+"use client"
+
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router'
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
 import RatingComponent from '@/components/ratings/ratings';
 import LinkComponent from '@/components/link/link';
+import { ApiRatings } from '@/services/ratings';
 
 export default function LinkAvaliações() {
+    
     return(
         <div style={{
             backgroundColor: '#FCF6F6',
@@ -42,10 +46,10 @@ export default function LinkAvaliações() {
                     alignItems: 'center',
                     marginTop: '30px'
                 }}>
-                    <LinkComponent itemName='calça'/>
-                    <LinkComponent itemName='camisa'/>
-                    <LinkComponent itemName='meia'/>
-                    <LinkComponent itemName='tênis'/>
+                    <LinkComponent itemName='camisa' />
+                    <LinkComponent itemName='camisa' />
+                    <LinkComponent itemName='camisa' />
+                    <LinkComponent itemName='camisa' />
                 </div>
             </div>
     
