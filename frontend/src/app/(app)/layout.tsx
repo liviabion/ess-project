@@ -26,7 +26,7 @@ export default function AppLayout({
     <html lang="pt-br">
       <body className={cn('min-h-screen', redHatDisplay.className)}>
         <HeaderUser />
-        <LinkAvaliações/>
+        <Item/>
         <Footer />
       </body>
     </html>

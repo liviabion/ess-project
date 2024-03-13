@@ -44,11 +44,11 @@ export default function Avaliações() {
                     flexDirection: 'column',
                     marginTop: '20px'
                 }}>
-                    <RatingComponent/>
-                    <RatingComponent/>
-                    <RatingComponent/>
-                    <RatingComponent/>
-                    <RatingComponent/>
+                    <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
+                    <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
+                    <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
+                    <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
+                    <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
                 </div>
             </div>
     

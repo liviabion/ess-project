@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'
 import { Rating } from '@smastrom/react-rating';
@@ -7,6 +9,14 @@ import ColorComponent from '@/components/color/color';
 import SizeComponent from '@/components/size/size';
 
 export default function Item() {
+    const [selectedColor, setSelectedColor] = useState('preto');
+    const [selectedSize, setSelectedSize] = useState('P');
+    const handleColorSelect = (color: string) => {
+        setSelectedColor(color);
+    };
+    const handleSizeSelect = (size: string) => {
+        setSelectedSize(size);
+    };  
     return(
         <div style={{
             backgroundColor: '#FCF6F6',
@@ -69,7 +79,7 @@ export default function Item() {
                             marginLeft: '-70px',
                             fontSize: '30px',
                             fontFamily: 'Red Hat Display, sans-serif',
-                        }} className='font-medium'><strong>Cor:</strong> Preta</p>
+                        }} className='font-medium'><strong>Cor:</strong> {selectedColor}</p>
 
                         <div style={{
                             display: 'flex',
@@ -78,9 +88,9 @@ export default function Item() {
                             marginLeft: '-30px',
                             justifyContent: 'space-around'
                         }}>
-                           <ColorComponent color='preto' />
-                           <ColorComponent color='vermelho' />
-                           <ColorComponent color='azul' />
+                            <ColorComponent color='preto' selected={selectedColor === 'preto'} onClick={() => handleColorSelect('preto')} />
+                            <ColorComponent color='vermelho' selected={selectedColor === 'vermelho'} onClick={() => handleColorSelect('vermelho')} />
+                            <ColorComponent color='azul' selected={selectedColor === 'azul'} onClick={() => handleColorSelect('azul')} />
                         </div>
 
                         <p style={{
@@ -88,7 +98,7 @@ export default function Item() {
                             marginLeft: '-70px',
                             fontSize: '30px',
                             fontFamily: 'Red Hat Display, sans-serif',
-                        }} className='font-medium'><strong>Tamanho:</strong> M</p>
+                        }} className='font-medium'><strong>Tamanho:</strong> {selectedSize}</p>
                         
                         <div style={{
                             display: 'flex',
@@ -97,12 +107,12 @@ export default function Item() {
                             marginLeft: '-70px',
                             justifyContent: 'space-around'
                         }}>
-                            <SizeComponent size='P' />
-                            <SizeComponent size='M' />
-                            <SizeComponent size='G' />
+                            <SizeComponent size='P' selected={selectedSize === 'P'} onClick={() => handleSizeSelect('P')} />
+                            <SizeComponent size='M' selected={selectedSize === 'M'} onClick={() => handleSizeSelect('M')} />
+                            <SizeComponent size='G' selected={selectedSize === 'G'} onClick={() => handleSizeSelect('G')} />
                         </div>
 
-                        <a>
+                        <a href='#'>
                             <div style={{
                                 display: 'flex',
                                 alignItems:'center',
@@ -140,7 +150,57 @@ export default function Item() {
                              marginBottom: '30px'
                         }} className='font-normal'>Sed vulputate porta facilisis Curabitur. massa, pretium Vestibulum cursus ante quis. orci efficitur Duis laoreet iaculis. congue justo nec lectus Aenean velit dictum. Pellentesque ut nisi in eleifend gravida. amet, id Etiam mi bibendum justo, ultricies nec. egestas leo Curabitur congue, tempus, mi. ante massa, pretium quis cursus Vestibulum. neque laoreet non. dignissim aliquam Aenean suscipit quis. nulla, dapibus orci mauris Proin a, semper eu.</p>
                     </div>
-                    <RatingComponent/>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row'
+                    }}>
+                        <p style={{
+                        fontSize: '40px',
+                        fontFamily: 'Red Hat Display, sans-serif',
+                        marginRight: '20px'
+                    }} className='font-bold'>Avaliações</p>
+                        <Rating style={{ maxWidth: 250, marginBottom: '5px' }} value={3} readOnly={true}/>
+                    </div>
+                    <div style={{
+                        marginLeft: '30px',
+                        marginTop: '30px'
+                    }}>
+                        <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
+                    </div>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginTop: '-30px',
+                        marginLeft: '30px',
+                        marginBottom: '50px'
+                    }}>
+                        <a href="#" style={{
+                            fontSize: '25px',
+                            fontFamily: 'Red Hat Display, sans-serif',
+                            textDecoration: 'underline'
+                        }} className='font-normal'>Ver mais</a>
+
+                        <a href='#'>
+                            <div style={{
+                                display: 'flex',
+                                alignItems:'center',
+                                justifyContent: 'center',
+                                paddingTop: '10px',
+                                paddingBottom: '10px',
+                                paddingRight: '20px',
+                                paddingLeft: '20px',
+                                backgroundColor: '#000000',
+                                borderRadius: '20px'
+                            }}>
+                                <p style={{
+                                    color: '#FFFFFF',
+                                    fontSize: '30px',
+                                    fontFamily: 'Red Hat Display, sans-serif',
+                                }} className='font-semibold'>Ir para o carrinho</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
     

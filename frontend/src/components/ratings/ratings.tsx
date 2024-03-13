@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
 
-export default function RatingComponent() {
+interface RatingComponentProps {
+    rating: number;
+    comment: string;
+}
+
+const RatingComponent: React.FC<RatingComponentProps> = ({ rating, comment }) => {
     return(
         <div style={{
             height: 'auto',
@@ -27,7 +32,7 @@ export default function RatingComponent() {
                     marginRight: '80px'
                 }}>De: Dodo</text>
     
-                <Rating style={{ maxWidth: 250, marginBottom: '5px' }} value={3} readOnly={true}/>
+                <Rating style={{ maxWidth: 250, marginBottom: '5px' }} value={rating} readOnly={true}/>
             </div>
     
             <div style={{
@@ -40,8 +45,10 @@ export default function RatingComponent() {
                     fontSize: '36px',
                     paddingLeft: '30px',
                     paddingBottom: '20px',
-                }}>Sed vulputate porta facilisis Curabitur.</text>
+                }}>{comment}</text>
             </div>
         </div>
     )
 }
+
+export default RatingComponent
