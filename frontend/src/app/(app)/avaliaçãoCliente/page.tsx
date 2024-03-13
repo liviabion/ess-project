@@ -1,140 +1,57 @@
 'use client'
+import * as styles from './styles';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import { Rating } from '@smastrom/react-rating';
-import '@smastrom/react-rating/style.css'
+import '@smastrom/react-rating/style.css';
 import RatingComponent from '@/components/ratings/ratings';
 
 export default function AvaliaçãoCliente() {
-    const [rating, setRating] = useState(0) // Initial value
-    const [comment, setComment] = useState("")
-    return(
-        <div style={{
-            backgroundColor: '#FCF6F6',
-            minHeight: '100vh',
-            height: 'auto',
-            display: 'flex',
-            flexDirection: 'column',
-        }}>
-            <div style={{
-                width: '80%',
-                display: 'flex',
-                flexDirection: 'column',
-                marginLeft: '10%',
-            }}>
-                <div style={{
-                width: '318px',
-                height: '27px',
-                backgroundColor: 'black'
-                }}></div>
+    const [rating, setRating] = useState(0); // Initial value
+    const [comment, setComment] = useState("");
 
-                <div style={{
-                    padding: '20px',
-                    display: 'flex',
-                    flexDirection: 'row',
-                }}>
-                    <text style={{
-                        color: '#9B1127',
-                        fontSize: '50px',
-                        marginRight: '20px',
-                    }} className='font-bold'>Avaliações</text>
+    return (
+        <div style={styles.pageContainer}>
+            <div style={styles.sectionContainer}>
+                <div style={styles.blackBar}></div>
+
+                <div style={styles.headerContainer}>
+                    <text style={styles.headerText} className='font-bold'>Avaliações</text>
                     <Rating style={{ maxWidth: 250, marginBottom: '5px' }} value={3} readOnly={true}/>
                 </div>
                 
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    marginTop: '20px'
-                }}>
+                <div style={styles.ratingsContainer}>
                     <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
                     <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
                     <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
                 </div>
                 <div>
-                    <button style={{
-                        backgroundColor: '#000000',
-                        fontSize: '30px',
-                        fontWeight: '600',
-                        padding: '5px 30px',
-                        borderRadius: '20px',
-                        color: 'white',
-                        marginBottom: '30px'
-                    }}>Adicionar avaliação</button>
-                    <div style={{
-                        marginLeft: '5%'
-                    }}>
+                    <button style={styles.addButton} className='font-semibold'>Adicionar avaliação</button>
+                    <div style={styles.ratingSection}>
                         <div>
-                            <p style={{
-                                fontSize: '40px',
-                                fontWeight: '600',
-                                color: '#000000',
-                                marginLeft: '2%',
-                            }}>Nota</p>
-                            <div style={{
-                                width: '30%',
-                                minWidth: '400px',
-                                height: '113px',
-                                borderRadius: '20px',
-                                backgroundColor: '#FFFFFF',
-                                boxShadow: '0px 5px 3px 1px #00000080',
-                                marginBottom: '60px',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems:'center'
-                            }}>
+                            <p style={styles.noteTitle}>Nota</p>
+                            <div style={styles.noteContainer}>
                                 <Rating style={{ maxWidth: 250 }} value={rating} onChange={setRating}/>
                             </div>
                         </div>
                         <div>
-                            <p style={{
-                                fontSize: '40px',
-                                fontWeight: '600',
-                                color: '#000000',
-                                marginLeft: '2%',
-                            }}>Comentário</p>
-                            <div style={{
-                                width: '70%',
-                                minWidth: '700px',
-                                height: '240px',
-                                borderRadius: '20px',
-                                backgroundColor: '#FFFFFF',
-                                boxShadow: '0px 5px 3px 1px #00000080',
-                            }}>
-                                <textarea placeholder='Digite aqui' value={comment} onChange={e=>setComment(e.target.value)}  maxLength={200} style={{
-                                    fontSize: '25px',
-                                    marginLeft: '50px',
-                                    paddingTop: '20px',
-                                    width: '670px',
-                                    height: '200px',
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    outline: 'none',
-                                }}/>
+                            <p style={styles.commentTitle}>Comentário</p>
+                            <div style={styles.commentContainer}>
+                                <textarea 
+                                    placeholder='Digite aqui' 
+                                    value={comment} 
+                                    onChange={e => setComment(e.target.value)}  
+                                    maxLength={200} 
+                                    style={styles.textareaStyle}
+                                />
                             </div>
-                            <div  style={{
-                               display: 'flex',
-                               flexDirection: 'row',
-                               justifyContent: 'flex-end',
-                               alignItems: 'flex-end',
-                            }}>
-                                <button style={{
-                                    backgroundColor: '#000000',
-                                    fontSize: '30px',
-                                    fontWeight: '600',
-                                    padding: '5px 30px',
-                                    borderRadius: '20px',
-                                    color: 'white',
-                                    marginBottom: '30px',
-                                    marginTop: '30px',
-                                    marginRight: '350px'
-                                }}>OK</button>
+                            <div style={styles.okButtonContainer}>
+                                <button style={styles.okButton}>OK</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     );
 }
