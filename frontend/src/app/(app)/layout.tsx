@@ -2,12 +2,13 @@ import { HeaderUser } from '@/components/header/header-user'
 import type { Metadata } from 'next'
 import '../globals.css'
 import { Footer } from '@/components/footer'
-import Avaliações from './avaliações/page'
+import Avaliações from './avaliacoes/page'
 import AvaliaçãoCliente from './avaliaçãoCliente/page'
-import Item from './item/page'
 import LinkAvaliações from './linkAvaliações/page'
 import { Red_Hat_Display } from 'next/font/google' 
 import { cn } from '@/lib/utils'
+import { CartProvider } from '@/providers/cart'
+import InternalAppLayout from '@/components/internal-app-layout'
 
 const redHatDisplay = Red_Hat_Display({ subsets: ['latin'] })
 
@@ -25,9 +26,9 @@ export default function AppLayout({
   return (
     <html lang="pt-br">
       <body className={cn('min-h-screen', redHatDisplay.className)}>
-        <HeaderUser />
-        <Item/>
-        <Footer />
+        <InternalAppLayout>
+          {children}
+        </InternalAppLayout>
       </body>
     </html>
   )

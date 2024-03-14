@@ -28,4 +28,19 @@ export namespace ApiRatings {
       status: response ? response.status : null
     }
   }
+
+  export interface Item {
+    id: number;
+    name: string;
+    price: number;
+    category: string;
+    description: string; 
+    image: string;
+    sizes: string;
+    amount: number;
+  }
+  export async function getItemById(id: string): Promise<Item | null> {
+    const response = await backend.get(`/itens/${id}`);
+    return response.data.data;
+  }
 }

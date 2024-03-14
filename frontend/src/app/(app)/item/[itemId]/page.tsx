@@ -1,17 +1,22 @@
 'use client'
 
 import * as styles from './styles'; // Import styles from styles.ts
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import RatingComponent from '@/components/ratings/ratings';
 import ColorComponent from '@/components/color/color';
 import SizeComponent from '@/components/size/size';
+import { useCart } from '@/providers/cart';
+import { ApiRatings } from '@/services/ratings';
 
-export default function Item() {
+export default function Item({ params }: { params: { itemId: string } }) {
+    const [item, setItem] = useState<ApiRatings.Item | null>(null);
     const [selectedColor, setSelectedColor] = useState('preto');
     const [selectedSize, setSelectedSize] = useState('P');
+
+    const { cart, addItemToCart } = useCart();
 
     const handleColorSelect = (color: string) => {
         setSelectedColor(color);
@@ -21,24 +26,52 @@ export default function Item() {
         setSelectedSize(size);
     };
 
+    const handleAddCart = (item: ApiRatings.Item) => {
+        addItemToCart({
+            cor: selectedColor,
+            size: selectedSize,
+            id: item.id,
+            image: item.image,
+            name: item.name,
+            price: item.price,
+        })
+    }
+
+    useEffect(() => {
+        async function fetchItem() {
+            const item = await ApiRatings.getItemById(params.itemId);
+            setItem(item);
+        }
+
+        fetchItem();
+    }, [])
+
+    useEffect(() => console.log(cart), [cart])
+
+    if (!item) return (
+        <div style={styles.pageContainer}>
+            <p>Carregando dados...</p>
+        </div>
+    );
+
     return (
         <div style={styles.pageContainer}>
             <div style={styles.sectionContainer}>
                 <div style={styles.rowContainer}>
                     <div style={styles.columnContainer}>
                         <img 
-                            src="https://s3-alpha-sig.figma.com/img/447f/8553/c83699df07857228fb0f1ddb0e36ff46?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=NAjsO4NOErvFD3ywNi27YIRwlk32i2fFLalSeXwj0E3W2mxtrl2pN9kkK127CDtuwRHAxkUuxsheg-mm0ysf63FD8OZVY1-eLohuZqH46yyLXXRiz9p-aockFpUY-Oc6N6uSx0nFnsPAELumsB6lLR2HVcaKZYF5DXmTghvJm0Z9KmjlUfv-ebQQWNuzo2AOpbvRLo4HUnDjrFb4JrS4tAFYcmsX4zG9so7LP9cHv17uioPwF~Y6wcr26pxUBefszBFkLXrX1~hywBKmqm0UygacmgMYkSGHe3fJBN1xO6JqzaOYfRsC4cOdvs8munECfAUavNnlHgEkz4nyER8w2w__"
+                            src={item?.image}
                             style={styles.itemImage}
                             alt="Item Image"
                         />
-                        <p style={styles.itemPrice} className='font-semibold'>R$ 50,00</p>
+                        <p style={styles.itemPrice} className='font-semibold'>{item.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     </div>
 
                     <div style={styles.itemNameContainer}>
                         <div style={styles.blackBar}></div>
 
                         <div>
-                            <text style={styles.itemName} className='font-bold'>Nome do item</text>
+                            <text style={styles.itemName} className='font-bold'>{item.name}</text>
                         </div>
 
                         <p style={styles.itemAttribute} className='font-medium'><strong>Cor:</strong> {selectedColor}</p>
@@ -57,9 +90,9 @@ export default function Item() {
                             <SizeComponent size='G' selected={selectedSize === 'G'} onClick={() => handleSizeSelect('G')} />
                         </div>
 
-                        <a href='#' style={styles.addToCartButton}>
+                        <button style={styles.addToCartButton} onClick={() => handleAddCart(item)}>
                             <p style={styles.addToCartButtonText} className='font-semibold'>Adicionar ao carrinho</p>
-                        </a>
+                        </button>
                     </div>
                 </div>  
                 
