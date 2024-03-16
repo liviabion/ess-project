@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import RatingComponent from '@/components/ratings/ratings';
-import * as styles from './styles'; // Assuming styles.ts is in the same directory
+import * as styles from './styles'; 
 
 export default function Avaliações() {
     return(
