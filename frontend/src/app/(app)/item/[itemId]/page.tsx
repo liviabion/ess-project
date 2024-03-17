@@ -13,8 +13,38 @@ import { ApiRatings } from '@/services/ratings';
 
 export default function Item({ params }: { params: { itemId: string } }) {
     const [item, setItem] = useState<ApiRatings.Item | null>(null);
-    const [selectedColor, setSelectedColor] = useState('Preto');
-    const [selectedSize, setSelectedSize] = useState('P');
+    const [colors, setColors] = useState<string[]>([]);
+    const [sizes, setSizes] = useState<string[]>([]);
+    const [selectedColor, setSelectedColor] = useState<string>('');
+    const [selectedSize, setSelectedSize] = useState<string>('');
+
+    useEffect(() => {
+        async function fetchItem() {
+            const item = await ApiRatings.getItemById(params.itemId);
+            if (item) {
+                // Splitting colors and sizes strings into arrays
+                const colorsArray = item.colors.split(', ');
+                const sizesArray = item.sizes.split(', ');
+                setColors(colorsArray);
+                setSizes(sizesArray);
+                setItem(item);
+            }
+        }
+        fetchItem();
+    }, []);
+
+    useEffect(() => {
+        if (colors.length > 0) {
+            setSelectedColor(colors[0]);
+        }
+    }, [colors]);
+    
+    useEffect(() => {
+        if (sizes.length > 0) {
+            setSelectedSize(sizes[0]);
+        }
+    }, [sizes]);
+
 
     const { cart, addItemToCart } = useCart();
 
@@ -77,17 +107,27 @@ export default function Item({ params }: { params: { itemId: string } }) {
                         <p style={styles.itemAttribute} className='font-medium'><strong>Cor:</strong> {selectedColor}</p>
 
                         <div style={styles.colorSizeRow}>
-                            <ColorComponent color='Preto' selected={selectedColor === 'Preto'} onClick={() => handleColorSelect('Preto')} />
-                            <ColorComponent color='Vermelho' selected={selectedColor === 'Vermelho'} onClick={() => handleColorSelect('Vermelho')} />
-                            <ColorComponent color='Azul' selected={selectedColor === 'Azul'} onClick={() => handleColorSelect('Azul')} />
+                            {colors.map((color, index) => (
+                                <ColorComponent
+                                    key={index}
+                                    color={color}
+                                    selected={selectedColor === color}
+                                    onClick={() => handleColorSelect(color)}
+                                />
+                            ))}
                         </div>
 
                         <p style={styles.itemAttribute}><strong>Tamanho:</strong> {selectedSize}</p>
                         
                         <div style={styles.colorSizeRow}>
-                            <SizeComponent size='P' selected={selectedSize === 'P'} onClick={() => handleSizeSelect('P')} />
-                            <SizeComponent size='M' selected={selectedSize === 'M'} onClick={() => handleSizeSelect('M')} />
-                            <SizeComponent size='G' selected={selectedSize === 'G'} onClick={() => handleSizeSelect('G')} />
+                            {sizes.map((size, index) => (
+                                <SizeComponent
+                                    key={index}
+                                    size={size}
+                                    selected={selectedSize === size}
+                                    onClick={() => handleSizeSelect(size)}
+                                />
+                            ))}
                         </div>
 
                         <button style={styles.addToCartButton} onClick={() => handleAddCart(item)}>
@@ -109,7 +149,7 @@ export default function Item({ params }: { params: { itemId: string } }) {
                         <RatingComponent rating={3} comment='Sed vulputate porta facilisis Curabitur.'/>
                     </div>
                     <div style={styles.viewMoreRow}>
-                        <a href="#" style={styles.viewMoreLink} className='font-medium'>Ver mais</a>
+                        <a href="/avaliacoes" style={styles.viewMoreLink} className='font-medium'>Ver mais</a>
                         <a href='/cart' style={styles.goToCartButton}>
                             <p style={styles.goToCartButtonText} className='font-semibold'>Ir para o carrinho</p>
                         </a>

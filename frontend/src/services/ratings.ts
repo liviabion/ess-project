@@ -37,6 +37,7 @@ export namespace ApiRatings {
     description: string; 
     image: string;
     sizes: string;
+    colors: string;
     amount: number;
   }
   export async function getItemById(id: string): Promise<Item | null> {
