@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useState, useContext } from "react"
+import { createContext, PropsWithChildren, useState, useContext, useEffect } from "react"
 
 interface CartItem {
   id: number;
@@ -22,7 +22,15 @@ interface CartContextType {
 const CartContext = createContext<CartContextType>({} as CartContextType);
 
 export const CartProvider = ({ children }: PropsWithChildren) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    // Try to load the cart from local storage at initialization
+    const localCart = localStorage.getItem('cart');
+    return localCart ? JSON.parse(localCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}, [cart]);
 
   // adicionar item
   const addItemToCart = (data: Omit<CartItem, 'quantity'>) => {
@@ -39,13 +47,9 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
   const increaseQuantity = (id: number) => {
     const itemToIncrease = cart.find(cartItem => cartItem.id === id)
     if (itemToIncrease === undefined) return;
-    setCart([
-        ...cart.filter(cartItem => cartItem.id !== id),
-        {
-          ...itemToIncrease,
-          quantity: itemToIncrease.quantity + 1,
-        }
-    ])
+    setCart(currentCart => currentCart.map(item =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+  ));
 
   }
 
@@ -56,13 +60,9 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 
     if (itemToDiminish.quantity === 1) removeItemToCart(id)
     else {
-      setCart([
-        ...cart.filter(cartItem => cartItem.id !== id),
-        {
-          ...itemToDiminish,
-          quantity: itemToDiminish.quantity - 1,
-        }
-      ])
+      setCart(currentCart => currentCart.map(item =>
+        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+    ).filter(item => item.quantity > 0));
     }
   }
 

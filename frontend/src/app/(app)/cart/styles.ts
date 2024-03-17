@@ -44,7 +44,8 @@ export const cartContainer: CSSProperties = {
 export const cartItemContainer: CSSProperties = {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: '30px',
 };
 
 export const leftCart: CSSProperties = {
@@ -66,7 +67,7 @@ export const imageContainer: CSSProperties = {
 };
 
 export const itemImage: CSSProperties = {
-    width: '200px',
+    height: '240px',
     borderRadius: '20px'
 };
 
@@ -159,7 +160,7 @@ export const totalPriceContainer: CSSProperties = {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginTop: '30px'
+    marginBottom: '30px',
 };
 
 export const priceContainer: CSSProperties = {

@@ -60,7 +60,7 @@ export default function Item({ params }: { params: { itemId: string } }) {
                 <div style={styles.rowContainer}>
                     <div style={styles.columnContainer}>
                         <img 
-                            src={item?.image}
+                            src={item.image}
                             style={styles.itemImage}
                             alt="Item Image"
                         />
@@ -98,7 +98,7 @@ export default function Item({ params }: { params: { itemId: string } }) {
                 
                 <div style={styles.descriptionSection}>
                     <p style={styles.itemPrice} className='font-bold'>Descrição</p>
-                    <p style={styles.itemAttribute} className='font-medium'>Sed vulputate porta facilisis Curabitur. massa, pretium Vestibulum cursus ante quis. orci efficitur Duis laoreet iaculis. congue justo nec lectus Aenean velit dictum. Pellentesque ut nisi in eleifend gravida. amet, id Etiam mi bibendum justo, ultricies nec. egestas leo Curabitur congue, tempus, mi. ante massa, pretium quis cursus Vestibulum. neque laoreet non. dignissim aliquam Aenean suscipit quis. nulla, dapibus orci mauris Proin a, semper eu.</p>
+                    <p style={styles.itemAttribute} className='font-medium'>{item.description}</p>
                 </div>
                 <div>
                     <div style={styles.ratingsRow}>
@@ -110,7 +110,7 @@ export default function Item({ params }: { params: { itemId: string } }) {
                     </div>
                     <div style={styles.viewMoreRow}>
                         <a href="#" style={styles.viewMoreLink} className='font-medium'>Ver mais</a>
-                        <a href='#' style={styles.goToCartButton}>
+                        <a href='/cart' style={styles.goToCartButton}>
                             <p style={styles.goToCartButtonText} className='font-semibold'>Ir para o carrinho</p>
                         </a>
                     </div>
