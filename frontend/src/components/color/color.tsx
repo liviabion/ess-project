@@ -8,9 +8,9 @@ interface ColorComponentProps {
 
 const ColorComponent: React.FC<ColorComponentProps & { onClick: () => void }> = ({ color, selected, onClick }) => {
     const colorMap: { [key: string]: string } = {
-        vermelho: '#FF0000',
-        azul: '#0000FF',
-        preto: '#000000',
+        Vermelho: '#FF0000',
+        Azul: '#0000FF',
+        Preto: '#000000',
     };
     const backgroundColor = colorMap[color];
 

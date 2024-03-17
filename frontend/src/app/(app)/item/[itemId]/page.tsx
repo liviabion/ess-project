@@ -13,7 +13,7 @@ import { ApiRatings } from '@/services/ratings';
 
 export default function Item({ params }: { params: { itemId: string } }) {
     const [item, setItem] = useState<ApiRatings.Item | null>(null);
-    const [selectedColor, setSelectedColor] = useState('preto');
+    const [selectedColor, setSelectedColor] = useState('Preto');
     const [selectedSize, setSelectedSize] = useState('P');
 
     const { cart, addItemToCart } = useCart();
@@ -71,15 +71,15 @@ export default function Item({ params }: { params: { itemId: string } }) {
                         <div style={styles.blackBar}></div>
 
                         <div>
-                            <text style={styles.itemName} className='font-bold'>{item.name}</text>
+                            <text style={styles.itemName} className='font-bold' data-testid="itemName">{item.name} </text>
                         </div>
 
                         <p style={styles.itemAttribute} className='font-medium'><strong>Cor:</strong> {selectedColor}</p>
 
                         <div style={styles.colorSizeRow}>
-                            <ColorComponent color='preto' selected={selectedColor === 'preto'} onClick={() => handleColorSelect('preto')} />
-                            <ColorComponent color='vermelho' selected={selectedColor === 'vermelho'} onClick={() => handleColorSelect('vermelho')} />
-                            <ColorComponent color='azul' selected={selectedColor === 'azul'} onClick={() => handleColorSelect('azul')} />
+                            <ColorComponent color='Preto' selected={selectedColor === 'Preto'} onClick={() => handleColorSelect('Preto')} />
+                            <ColorComponent color='Vermelho' selected={selectedColor === 'Vermelho'} onClick={() => handleColorSelect('Vermelho')} />
+                            <ColorComponent color='Azul' selected={selectedColor === 'Azul'} onClick={() => handleColorSelect('Azul')} />
                         </div>
 
                         <p style={styles.itemAttribute}><strong>Tamanho:</strong> {selectedSize}</p>
