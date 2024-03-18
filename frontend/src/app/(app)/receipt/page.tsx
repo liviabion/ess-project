@@ -8,19 +8,19 @@ export default function MinhaPagina() {
             nomeUsuario: 'João',
             nomeProduto: 'Produto X',
             quantidade: 2,
-            preco: 'R$ 50,00'
+            preco: 50.00
         },
         {
             nomeUsuario: 'João',
             nomeProduto: 'Produto Y',
             quantidade: 1,
-            preco: 'R$ 30,00'
+            preco: 30.00
         },
         {
             nomeUsuario: 'João',
             nomeProduto: 'Produto Z',
             quantidade: 3,
-            preco: 'R$ 60,00'
+            preco: 60.00
         }
         
         // Adicione outros pedidos conforme necessário

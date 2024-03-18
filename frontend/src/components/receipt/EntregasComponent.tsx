@@ -4,7 +4,7 @@ interface Pedido {
   nomeUsuario: string;
   nomeProduto: string;
   quantidade: number;
-  preco: string;
+  preco: number;
 }
 
 interface Props {
