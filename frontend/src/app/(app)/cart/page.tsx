@@ -76,9 +76,9 @@ export default function Cart() {
                                 <span style={styles.totalPrice} className='font-semibold'>Total: </span>
                                 <span style={styles.totalPrice} className='font-medium'>{totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
                             </p>
-                            <button style={styles.buyButton}>
+                            <a style={styles.buyButton} href='/linkAvaliacoes'>
                                 <p style={styles.buyText} className='font-semibold'>Comprar</p>
-                            </button>
+                            </a>
                         </div>
                     </div>
 

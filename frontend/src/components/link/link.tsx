@@ -13,7 +13,7 @@ const LinkComponent: React.FC<LinkComponentProps> = ({ itemName }) => {
             <p style={{
                 fontSize: '35px',
                 fontFamily: 'Red Hat Display, sans-serif',
-            }} className='font-medium'>Avalie seu pedido de "{itemName}" <a style={{textDecoration: 'underline'}}className='font-semibold' href="/avaliaçãoCliente">aqui</a></p>
+            }} className='font-medium'>Avalie seu pedido de "{itemName}" <a style={{textDecoration: 'underline'}}className='font-semibold' href="/avaliacaoCliente">aqui</a></p>
         </div>
     )
 }

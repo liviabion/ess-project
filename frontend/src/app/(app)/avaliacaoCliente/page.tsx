@@ -6,9 +6,16 @@ import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import RatingComponent from '@/components/ratings/ratings';
 
+
 export default function AvaliaçãoCliente() {
-    const [rating, setRating] = useState(0); // Initial value
+    const router = useRouter();
+    const [rating, setRating] = useState(0); 
     const [comment, setComment] = useState("");
+
+    const handleAddReview = () => {
+        localStorage.setItem('newReview', JSON.stringify({ rating, comment }));
+        router.push('/avaliacoes');
+    };
 
     return (
         <div style={styles.pageContainer}>
@@ -46,7 +53,7 @@ export default function AvaliaçãoCliente() {
                                 />
                             </div>
                             <div style={styles.okButtonContainer}>
-                                <button style={styles.okButton}>OK</button>
+                                <button style={styles.okButton} onClick={handleAddReview}>OK</button>
                             </div>
                         </div>
                     </div>
