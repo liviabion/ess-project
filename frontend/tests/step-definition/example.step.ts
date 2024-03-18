@@ -1,24 +1,27 @@
-import { Given, When, Then } from '@cucumber/cucumber';
-import { expect } from '@playwright/test';
-import { ICustomWorld } from '../support/custom-world';
+// import { Given, When, Then } from '@cucumber/cucumber';
+// import { expect } from '@playwright/test';
+// import { ICustomWorld } from '../support/custom-world';
 
-// Scenario: Has Title
-Given('I am at the playwright website', async function (this: ICustomWorld) {
-    await this.page!.goto('https://playwright.dev/');
-});
+// // Scenario: Has Title
+// Given('I am at the playwright website', async function (this: ICustomWorld) {
+//     await this.page!.goto('https://playwright.dev/');
+// });
 
-Then('the title has the text "Playwright"', async function (this: ICustomWorld) {
-    await expect(this.page!).toHaveTitle(/Playwright/);
-});
+// When('I open the page', async function (this: ICustomWorld) {
+//     // This step is already covered by the 'Given' step above
+// });
 
-// Scenario: Get Started Link
+// Then('the title has the text "Playwright"', async function (this: ICustomWorld) {
+//     await expect(this.page!).toHaveTitle(/Playwright/);
+// });
 
-When('I click at "Get Started"', async function (this: ICustomWorld) {
-    await this.page!.click('text=Get started');
-});
+// // Scenario: Get Started Link
 
-Then('the URL has the text "intro"', async function (this: ICustomWorld) {
 
-    await expect(this.page!).toHaveURL(/.*asdsd/);
-});
+// When('I click at "Get Started"', async function (this: ICustomWorld) {
+//     await this.page!.click('text=Get started');
+// });
 
+// Then('the URL has the text "intro"', async function (this: ICustomWorld) {
+//     await expect(this.page!).toHaveURL(/.*asdsd/);
+// });

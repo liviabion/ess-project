@@ -12,6 +12,18 @@ async function seed() {
     //}
   //});
 
+  const card = await prisma.cardPayment.create({
+    data: {
+      card_number: '9999 9999 9999 9999',
+      number: user.id,
+      cvv: 187,
+      expire_date: new Date(),
+      name: "Ric",
+      password: "999",
+      type: "credit"
+    }
+  })
+
   const itemsToCreate: Prisma.ItemCreateInput[] = [
     {
       name: 'Blusa Polo',
