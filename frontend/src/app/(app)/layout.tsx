@@ -1,3 +1,4 @@
+import { Inter } from 'next/font/google'
 import { HeaderUser } from '@/components/header/header-user'
 import '../globals.css'
 import { Footer } from '@/components/footer'

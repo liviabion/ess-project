@@ -6,4 +6,8 @@ export default {
   paths: ['tests/features/**/*.feature'],
   require: ['tests/step-definition/**/*.ts','tests/support/**/*.ts'],
   requireModule: ['ts-node/register'],
+  dryRun: false,
+  formatOptions: {
+    snippetInterface: 'async-await'
+  }
 }
