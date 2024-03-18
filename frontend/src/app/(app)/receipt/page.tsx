@@ -11,11 +11,18 @@ export default function MinhaPagina() {
             preco: 'R$ 50,00'
         },
         {
-            nomeUsuario: 'Maria',
+            nomeUsuario: 'João',
             nomeProduto: 'Produto Y',
             quantidade: 1,
             preco: 'R$ 30,00'
         },
+        {
+            nomeUsuario: 'João',
+            nomeProduto: 'Produto Z',
+            quantidade: 3,
+            preco: 'R$ 60,00'
+        }
+        
         // Adicione outros pedidos conforme necessário
     ];
 

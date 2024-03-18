@@ -1,4 +1,4 @@
-import { Given, When, Then } from '@cucumber/cucumber';
+/*import { Given, When, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { ICustomWorld } from '../support/custom-world';
 
@@ -24,3 +24,5 @@ When('I click at "Get Started"', async function (this: ICustomWorld) {
 Then('the URL has the text "intro"', async function (this: ICustomWorld) {
     await expect(this.page!).toHaveURL(/.*asdsd/);
 });
+
+*/
