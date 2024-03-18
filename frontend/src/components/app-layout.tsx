@@ -6,12 +6,20 @@ export interface AppRoute {
 export const appUserRoutes: AppRoute[] = [
   {
     name: 'Início',
-    path: '/home'
+    path: '/'
   },
   {
     name: 'Blusas',
     path: '/blusas'
-  }
+  },
+  {
+    name: 'Calças',
+    path: '/calcas'
+  },
+  {
+    name: 'Vestidos',
+    path: '/vestidos'
+  },
 ];
 
 export const appAdminRoutes: AppRoute[] = [
@@ -26,6 +34,10 @@ export const appAdminRoutes: AppRoute[] = [
   {
     name: 'Cupons',
     path: '/cupons'
+  },
+  {
+    name: 'Entregadores',
+    path: '/deliveryPerson'
   },
   {
     name: 'Entregas',

@@ -4,7 +4,8 @@ import Image from 'next/image';
 import {Input} from "@nextui-org/react";
 import { trash, sale, add } from './assets';
 import { ApiCupons } from '@/services/cupons';
-import { useForm, SubmitHandler, Form } from 'react-hook-form';
+import { useForm, SubmitHandler} from 'react-hook-form';
+
 
 interface CuponsProps {
   id: number;
@@ -35,13 +36,13 @@ export const ModalAddCupom = () => {
       <div className='flex justify-end'>
         <button
           onClick={() => setShowModal(true)} 
-          className='bg-rose-700 h-50 w-105 rounded-md flex' style={{width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}}
+          className='h-50 w-105 rounded-md flex mr-5' style={{width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}}
         >
           <Image
             src={add}
             alt="Adicionar"
-            width={24}
-            height={24}
+            width={60}
+            height={60}
           />
         </button>
       </div>
@@ -51,7 +52,7 @@ export const ModalAddCupom = () => {
             className='fixed top-0 left-0 z-50 w-screen h-screen bg-black bg-opacity-50'
             onClick={() => setShowModal(false)}
           ></div>
-          <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-5 rounded-md' style={{height: 400, width: 500}}>
+          <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-5 rounded-md' style={{width: 500}}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className='flex flex-col items-start justify-start pl-0 pt-5' >
                 <Input

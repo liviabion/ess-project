@@ -9,7 +9,6 @@ import {
 import { ApiItens } from "@/services/itens";
 import { useForm, SubmitHandler, Form } from 'react-hook-form';
 
-
 const Modal = ({ item }: { item: any }) => {
     const [isEditing, setIsEditing] = useState(false);
 
@@ -57,8 +56,7 @@ const Modal = ({ item }: { item: any }) => {
 
       const priceAsFloat = data.price ? parseFloat(String(data.price)) : undefined;
       const amountAsFloat = data.amount ? parseFloat(String(data.amount)) : undefined;
-      
-      
+    
       const newData = { ...data, price: priceAsFloat, amount: amountAsFloat};
       console.log("alterado",newData);
      

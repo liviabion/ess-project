@@ -41,7 +41,8 @@ export default function Home() {
       <text style={{
         color: '#9B1127',
         fontSize: '40px',
-        fontFamily: 'Red Hat Display, sans-serif'
+        fontFamily: 'Red Hat Display, sans-serif',
+        fontWeight: 'bold',
       }}>Cupons</text>
       <ModalAddCupom />
       {cupons.map((cupons, index) => (

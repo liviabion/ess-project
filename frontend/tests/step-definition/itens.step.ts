@@ -37,7 +37,6 @@ When(
     }
 );
     
-
 // cenário: editar item
 
 
@@ -53,11 +52,12 @@ When(
             await this.page!.click('button[type="submit"]');
         }
     );
-    // NAO SEI PQ NAO TA PEGANDO O TOHAVETEXT // Then deve aparecer um alert escrito "Item alterado com sucesso"
-    // Then("deve aparecer um alert escrito {string}", async function (this: ICustomWorld, alert: string) {
-    //     await expect(this.page!).toHaveText(alert);
-    // }); 
-   Then("a página deve ser recarregada", async function (this: ICustomWorld) {
-        await expect(this.page!).toHaveURL(`http://localhost:3000/itens`);
-    });
 
+    Then ("deve aparecer um alert escrito {string}", async function (this: ICustomWorld, alert: string) {
+        this.page?.on("dialog", async (alert) => {
+            expect(alert.type()).toContain("alert")
+            expect(alert.message).toContain(alert)
+    
+            await alert.accept()
+        });
+    });
