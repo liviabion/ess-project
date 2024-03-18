@@ -2,144 +2,63 @@ import prisma from "../database";
 import { Prisma } from "@prisma/client";
 
 async function seed() {
-  const user = await prisma.user.create({
-    data: {
-      name: 'Ric',
-      phone: '81999999999',
-      cpf: '11111111111',
-      email: 'ric@ric.com',
-      password: '123456'
-    }
-  });
+  //const user = await prisma.user.create({
+    //data: {
+      //name: 'Ric',
+      //phone: '81999999999',
+      //cpf: '11111111111',
+      //email: 'ric@ric.com',
+      //password: '123456'
+    //}
+  //});
 
   const itemsToCreate: Prisma.ItemCreateInput[] = [
     {
-      name: 'Blusa1',
-      description: 'Cadeira de escritório',
+      name: 'Blusa Polo',
+      description: 'Chique mas não tão confortável',
       category: 'Blusa',
       price: 50,
-      image: 'https://www.google.com.br',
+      image: 'https://img.irroba.com.br/fit-in/600x600/filters:fill(fff):quality(80)/nine4sto/catalog/camiseta-algodao/polo-preta-1.jpg',
       colors: 'Azul, Vermelho, Preto',
       sizes: 'P, M, G',
       amount: 10,
     },
     {
-      name: 'Blusa2',
-      description: 'Cadeira de escritório',
+      name: 'Blusa de Luan Santana',
+      description: 'A lua até beijou o mar...',
       category: 'Blusa',
       price: 50,
-      image: 'https://www.google.com.br',
+      image: 'https://images-americanas.b2w.io/produtos/3482322301/imagens/camisa-camiseta-personalizada-luan-santana-cantor-8/3482322319_1_large.jpg',
       colors: 'Azul, Vermelho, Preto',
       sizes: 'P, M, G',
       amount: 10,
     },
     {
-      name: 'Blusa3',
-      description: 'Cadeira de escritório',
+      name: 'Blusa do Metallica',
+      description: 'Blusa braba, banda incrível, do rock, só benefícios!',
       category: 'Blusa',
-      price: 50,
-      image: 'https://www.google.com.br',
+      price: 88,
+      image: 'https://images.tcdn.com.br/img/img_prod/1147522/camiseta_metallica_logo_148311_1_0ede675685c909a0a1cfa9372146f09a.jpeg',
       colors: 'Azul, Vermelho, Preto',
       sizes: 'P, M, G',
       amount: 10,
     },
   ]
 
-  const itemsId: number[] = [];
+  //Create items and store their IDs
+  const itemsId = await Promise.all(itemsToCreate.map(async (item) => {
+    const createdItem = await prisma.item.create({ data: item });
+    return createdItem.id;
+  }));
 
-  itemsToCreate.forEach(async (item) => {
-    const createdItem = await prisma.item.create({
-      data: item
-    });
-
-    itemsId.push(createdItem.id);
-  });
-
-  const deliveries: Prisma.DeliveryCreateInput[] = [
-    {
-      item: {
-        connect: [{ id: itemsId[0] }, { id: itemsId[1] }]
-      }
-    },
-    {
-      item: {
-        connect: [{ id: itemsId[2] }]
-      }
-    },
-    {
-      item: {
-        connect: itemsId.map((id) => ({ id }))
-      }
-    }
-  ];
-
-  const deliveriesId: number[] = [];
-
-  deliveries.forEach(async (delivery) => {
-    const createdDelivery = await prisma.delivery.create({
-      data: delivery
-    });
-
-    deliveriesId.push(createdDelivery.id);
-  });
-
-  const rating = prisma.rating.create({
+  // Create a delivery with the status "entregue" and connect the three items
+  await prisma.delivery.create({
     data: {
-      rating: 5,
-      comment: 'Muito bom',
+      status: 'entregue',
       item: {
-        connect: { id: itemsId[0] }
-      },
-      delivery: {
-        connect: { id: deliveriesId[0] }
+        connect: itemsId.map(id => ({ id })),
       },
     },
-  });
-  
-  const deliveryPerson = await prisma.deliveryPerson.create({
-    data: {
-      name: 'João',
-      cpf: '22222222222',
-      phone: '81999999999',
-      email: 'joao@joao.root.com',
-      status: 'active',
-      address: {
-        create: {
-          postalCode: '50740-560',
-          street: 'Av. Jornalista Aníbal Fernandes',
-          number: 's/n',
-          district: 'Cidade Universitária',
-          city: 'Recife',
-          state: 'PE',
-        }
-      }
-    },
-  });
-
-  await prisma.delivery.update({
-    where: { id: deliveriesId[0] },
-    data: {
-      deliveryPerson: {
-        connect: { id: deliveryPerson.id }
-      }
-    }
-  });
-
-  const notification = await prisma.notification.create({
-    data: {
-      category: 'new-delivery',
-      title: `Nova entrega ${deliveriesId[0]} solicitada`,
-      deliveryId: deliveriesId[0]
-    },
-  });
-
-  await prisma.cupom.create({
-    data: {
-      name: 'CUPOM10',
-      discount: '0,9',
-      start_date: new Date('2023-03-01').toISOString(),
-      end_date: new Date('2023-03-31').toISOString(),
-    }
   });
 }
 

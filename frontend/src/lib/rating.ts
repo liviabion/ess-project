@@ -1,0 +1,1 @@
+export * from '@smastrom/react-rating'
