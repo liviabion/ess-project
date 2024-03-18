@@ -17,6 +17,7 @@
 
 // // Scenario: Get Started Link
 
+
 // When('I click at "Get Started"', async function (this: ICustomWorld) {
 //     await this.page!.click('text=Get started');
 // });
