@@ -17,8 +17,8 @@ When ('eu seleciono o botão de mais "+"', async function (this: ICustomWorld) {
 });
 
 When(
-  "eu preencho o formulário com: category com {string}, discount com {string}, start_date com {string}, end_date com {string} e aperto o botão 'Confirmar'"
-  , async function (
+  "eu preencho o formulário com: category com {string}, discount com {string}, start_date com {string}, end_date com {string} e aperto o botão Confirmar"
+  ,{timeout: 15000}, async function (
         this: ICustomWorld,
         category: string,
         discount: string,
@@ -26,7 +26,7 @@ When(
         end_date: string
 
     ) {
-        await this.page!.fill('input[name="name"]', category);
+        await this.page!.fill('input[name="category"]', category);
         await this.page!.fill('input[name="discount"]', discount);
         await this.page!.fill('input[name="start_date"]', '2024-03-11');
         await this.page!.fill('input[name="end_date"]', '2024-03-23');
