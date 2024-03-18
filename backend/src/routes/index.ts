@@ -12,6 +12,7 @@ import ReceiptRouter from './ReceiptRoutes';
 
 import DeliveryNotificationRouter from './DeliveryNotificationRoutes';
 import paymentRouter from './CardPaymentRoutes';
+import SupportRouter from './SupportRoutes';
 
 const router = Router();
 
@@ -29,6 +30,8 @@ router.use('/categories', CategoriesRouter);
 router.use('/receipt', ReceiptRouter);
 router.use('/delivery-notifications', DeliveryNotificationRouter);
 router.use('/payment_methods', paymentRouter)
+
+router.use('/support', SupportRouter);
 
 router.route('/').get((_, res) => {
   res.status(200).send('🚀 ESS Server running');

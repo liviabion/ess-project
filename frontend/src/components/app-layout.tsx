@@ -44,3 +44,14 @@ export const appAdminRoutes: AppRoute[] = [
     path: '/entregas'
   }
 ];
+
+export const appDeliveryRoutes: AppRoute[] = [
+  {
+    name: 'Entregas disponíveis',
+    path: '/disponiveis'
+  },
+  {
+    name: 'Meu histórico',
+    path: '/historico'
+  }
+];
