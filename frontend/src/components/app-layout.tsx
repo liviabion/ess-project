@@ -11,7 +11,15 @@ export const appUserRoutes: AppRoute[] = [
   {
     name: 'Blusas',
     path: '/blusas'
-  }
+  },
+  {
+    name: 'Calças',
+    path: '/calcas'
+  },
+  {
+    name: 'Vestidos',
+    path: '/vestidos'
+  },
 ];
 
 export const appAdminRoutes: AppRoute[] = [
@@ -28,7 +36,22 @@ export const appAdminRoutes: AppRoute[] = [
     path: '/cupons'
   },
   {
+    name: 'Entregadores',
+    path: '/deliveryPerson'
+  },
+  {
     name: 'Entregas',
     path: '/entregas'
+  }
+];
+
+export const appDeliveryRoutes: AppRoute[] = [
+  {
+    name: 'Entregas disponíveis',
+    path: '/disponiveis'
+  },
+  {
+    name: 'Meu histórico',
+    path: '/historico'
   }
 ];

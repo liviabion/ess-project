@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+      "rootDir": "./",
+      "sourceMap": false,
+      "types": ["node", "cypress"]
+    },
+    "include": ["./**/*.ts"]
+  }

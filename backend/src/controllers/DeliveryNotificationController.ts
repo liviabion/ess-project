@@ -72,7 +72,7 @@ class DeliveryNotificationController {
 
       const delivery = await DeliveryRepository.findById(parseInt(deliveryId));
 
-      if (delivery?.status !== "deslocamento") {
+      if (!((delivery?.status === "deslocamento" && status === "entregue") || (delivery?.status === "solicitada" && status === "deslocamento"))) {
         return next({
           status: 400,
           message: "Status inválido para notificação de entrega finalizada",
@@ -89,7 +89,8 @@ class DeliveryNotificationController {
 
       const notification = await deliveryNotificationRepository.create({
         category: "delivery-status",
-        title: `Entrega ${updatedDelivery.id} realizada com sucesso`,
+        // title: `Entrega ${updatedDelivery.id} realizada com sucesso`,
+        title: status === "entregue" ? `Entrega ${updatedDelivery.id} realizada com sucesso` : `Entrega ${updatedDelivery.id} em deslocamento`,
         delivery: {connect: {id: updatedDelivery.id}},
       })
 

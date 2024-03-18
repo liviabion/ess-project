@@ -115,6 +115,7 @@ model Rating {
   itemId     Int
   delivery   Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
   deliveryId Int
+  @@unique([itemId, deliveryId])
 }
 
 model Notification {

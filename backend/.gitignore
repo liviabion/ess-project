@@ -6,3 +6,4 @@ logs/
 dist/
 yarn-error.log
 prisma/dev-test.db
+yarn.lock
